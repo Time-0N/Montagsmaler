@@ -1,0 +1,21 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  liquibase:
+    enabled: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/devdb
+    username: devuser
+    password: devpass
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+
+keycloak:
+  auth-server-url: http://localhost:8081/auth
+  realm: montagsmaler
+  resource: backend-service
