@@ -7,4 +7,6 @@ import com.example.model.dto.UserRegistrationRequest;
 public interface KeycloakService {
     String createKeycloakUser(UserRegistrationRequest request);
     TokenResponse authenticateUser(AuthenticationRequest request);
+
+    void deleteKeycloakUser(String keycloakUserId);
 }
