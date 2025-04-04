@@ -48,6 +48,19 @@ public class KeycloakServiceImpl implements KeycloakService {
         return null;
     }
 
+    @Override
+    public void deleteKeycloakUser(String keycloakUserId) {
+        try {
+            keycloakClient
+                    .realm(properties.getRealm())
+                    .users()
+                    .get(keycloakUserId)
+                    .remove();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private String extractUserId(Response response) {
         String location = response.getHeaderString("Location");
         return location.substring(location.lastIndexOf('/') + 1);
