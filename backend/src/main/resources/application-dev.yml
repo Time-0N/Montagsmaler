@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 9090
   servlet:
     context-path: /api
 
@@ -12,10 +12,22 @@ spring:
     password: devpass
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     show-sql: true
 
 keycloak:
-  auth-server-url: http://localhost:8081/auth
-  realm: montagsmaler
-  resource: backend-service
+  auth-server-url: ${KEYCLOAK_URL:http://localhost:8080}
+  realm: dev
+  client-id: dev
+  client-secret: QGzZYTwuVX21bB1513igRFmrVAM1zgM2
+  token-uri: ${keycloak.auth-server-url}/realms/${keycloak.realm}/protocol/openid-connect/token
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+  api-docs:
+    path: /v3/api-docs
+    enabled: true
+  default-produces-media-type: application/json
+  default-consumes-media-type: application/json

@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MontagsMalerApplication {
+public class MontagsmalerApplication {
     public static void main(String[] args) {
-        SpringApplication.run(MontagsMalerApplication.class, args);
+        SpringApplication.run(MontagsmalerApplication.class, args);
     }
 }
