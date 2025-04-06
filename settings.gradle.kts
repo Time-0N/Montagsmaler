@@ -7,4 +7,5 @@ pluginManagement {
 
 
 rootProject.name = "Montagsmaler"
-include("backend", "frontend")
+include("backend")
+include("frontend")
