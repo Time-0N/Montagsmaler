@@ -2,12 +2,16 @@ package com.example.business.service.impl;
 
 import com.example.business.service.KeycloakService;
 import com.example.config.KeycloakProperties;
-import com.example.model.dto.AuthenticationRequest;
-import com.example.model.dto.TokenResponse;
-import com.example.model.dto.UserRegistrationRequest;
+import com.example.model.dto.auth.AuthenticationRequest;
+import com.example.model.dto.auth.TokenResponse;
+import com.example.model.dto.user.UserRegistrationRequest;
+import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
+import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
+import org.keycloak.admin.client.KeycloakBuilder;
+import org.keycloak.representations.AccessTokenResponse;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.stereotype.Service;
@@ -45,24 +49,49 @@ public class KeycloakServiceImpl implements KeycloakService {
 
     @Override
     public TokenResponse authenticateUser(AuthenticationRequest request) {
-        return null;
+        try (Keycloak keycloakForAuth = KeycloakBuilder.builder()
+                .serverUrl(properties.getAuthServerUrl())
+                .realm(properties.getRealm())
+                .username(request.username())
+                .password(request.password())
+                .clientId(properties.getClientId())
+                .clientSecret(properties.getClientSecret())
+                .grantType(OAuth2Constants.PASSWORD)
+                .build())
+        {
+            AccessTokenResponse accessTokenResponse = keycloakForAuth.tokenManager().getAccessToken();
+
+            return new TokenResponse(
+                    accessTokenResponse.getToken(),
+                    accessTokenResponse.getRefreshToken(),
+                    accessTokenResponse.getExpiresIn(),
+                    accessTokenResponse.getRefreshExpiresIn(),
+                    accessTokenResponse.getTokenType()
+            );
+        } catch (Exception e) {
+            throw new RuntimeException("Authentication failed: " + e.getMessage(), e);
+        }
     }
 
     @Override
     public void deleteKeycloakUser(String keycloakUserId) {
         try {
-            keycloakClient
-                    .realm(properties.getRealm())
+            keycloakClient.realm(properties.getRealm())
                     .users()
                     .get(keycloakUserId)
                     .remove();
+        } catch (NotFoundException e) {
+            System.out.println("Keycloak user not found: " + keycloakUserId);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Failed to delete Keycloak user: " + e.getMessage());
+            throw new RuntimeException("Keycloak user deletion failed", e);
         }
     }
 
     private String extractUserId(Response response) {
         String location = response.getHeaderString("Location");
+        System.out.println("Status: " + response.getStatus());
+        System.out.println("Entity: " + response.readEntity(String.class));
         return location.substring(location.lastIndexOf('/') + 1);
     }
 }

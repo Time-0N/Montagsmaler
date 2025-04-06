@@ -1,8 +1,8 @@
 package com.example.business.service;
 
-import com.example.model.dto.AuthenticationRequest;
-import com.example.model.dto.TokenResponse;
-import com.example.model.dto.UserRegistrationRequest;
+import com.example.model.dto.auth.AuthenticationRequest;
+import com.example.model.dto.auth.TokenResponse;
+import com.example.model.dto.user.UserRegistrationRequest;
 
 public interface KeycloakService {
     String createKeycloakUser(UserRegistrationRequest request);

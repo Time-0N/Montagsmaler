@@ -1,8 +1,9 @@
 package com.example.seeder;
 
 import com.example.business.service.KeycloakService;
-import com.example.data.repository.UserRepository;
-import com.example.model.dto.UserRegistrationRequest;
+import com.example.business.service.UserService;
+import com.example.model.dto.user.UserRegistrationRequest;
+import com.example.model.dto.user.UserRegistrationResponse;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
@@ -13,22 +14,24 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DataSeeder {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final KeycloakService keycloakService;
 
     @PostConstruct
     public void resetAndSeed() {
-        userRepository.findAll().forEach(user -> {
+        // 🔥 STEP 1: Delete all users via UserService
+        userService.findAllUsers().forEach(user -> {
             try {
-                keycloakService.deleteKeycloakUser(user.getKeycloakId());
+                userService.deleteUser(user.getId()); // ✅ this handles Keycloak + DB + cache
+                System.out.println("🗑️ Deleted user: " + user.getUsername());
             } catch (Exception e) {
-                System.out.println("⚠️ Failed to delete user in Keycloak: " + e.getMessage());
+                System.out.println("⚠️ Failed to delete user '" + user.getUsername() + "': " + e.getMessage());
             }
         });
 
-        userRepository.deleteAll();
         System.out.println("🧹 All users deleted.");
 
+        // 🚀 STEP 2: Create test user via registration
         try {
             UserRegistrationRequest testUser = new UserRegistrationRequest(
                     "testuser",
@@ -38,8 +41,8 @@ public class DataSeeder {
                     "User"
             );
 
-            keycloakService.createKeycloakUser(testUser);
-            System.out.println("✅ Test user created.");
+            UserRegistrationResponse response = userService.registerUser(testUser);
+            System.out.println("✅ Test user created: " + response.username());
         } catch (Exception e) {
             System.out.println("❌ Failed to create test user: " + e.getMessage());
         }

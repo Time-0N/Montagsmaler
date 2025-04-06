@@ -12,6 +12,11 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  security:
+    oauth2:
+      resource server:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/dev
 
 logging:
   level:
@@ -26,7 +31,7 @@ keycloak:
 
 springdoc:
   swagger-ui:
-    path: /swagger-ui.html
+    path: swagger-ui.html
     enabled: true
   api-docs:
     path: /v3/api-docs

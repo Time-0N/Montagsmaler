@@ -3,20 +3,24 @@ package com.example.business.service.impl;
 import com.example.business.service.KeycloakService;
 import com.example.business.service.UserService;
 import com.example.data.repository.UserRepository;
+import com.example.model.dto.auth.AuthenticationRequest;
+import com.example.model.dto.auth.TokenResponse;
 import com.example.model.entity.User;
-import com.example.model.dto.UserRegistrationRequest;
-import com.example.model.dto.UserRegistrationResponse;
+import com.example.model.dto.user.UserRegistrationRequest;
+import com.example.model.dto.user.UserRegistrationResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final KeycloakService keycloakAdminService;
+    private final KeycloakService keycloakService;
 
     @Transactional
     @Override
@@ -25,14 +29,36 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Username or email address already in use");
         }
 
-        String keycloakUserId = keycloakAdminService.createKeycloakUser(request);
+        String keycloakUserId = keycloakService.createKeycloakUser(request);
         User user = createLocalUser(request, keycloakUserId);
 
-        return new UserRegistrationResponse(
-                user.getId(),
-                user.getUsername(),
-                user.getEmail()
+        TokenResponse tokenResponse = keycloakService.authenticateUser(
+                new AuthenticationRequest(
+                        request.username(),
+                        request.password()
+                )
         );
+
+        return new UserRegistrationResponse(
+                user.getUsername(),
+                user.getEmail(),
+                tokenResponse
+        );
+    }
+
+    @Override
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public void deleteUser(UUID uuid) {
+        User user = userRepository.findById(uuid)
+                .orElseThrow(() -> new RuntimeException("User not found with ID: " + uuid));
+
+        keycloakService.deleteKeycloakUser(user.getKeycloakId());
+        userRepository.delete(user);
     }
 
     @Override

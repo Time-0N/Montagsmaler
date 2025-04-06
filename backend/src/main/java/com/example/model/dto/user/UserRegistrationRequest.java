@@ -1,4 +1,4 @@
-package com.example.model.dto;
+package com.example.model.dto.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

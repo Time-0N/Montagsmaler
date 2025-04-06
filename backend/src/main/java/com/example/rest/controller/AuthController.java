@@ -2,7 +2,10 @@ package com.example.rest.controller;
 
 import com.example.business.service.KeycloakService;
 import com.example.business.service.UserService;
-import com.example.model.dto.*;
+import com.example.model.dto.auth.AuthenticationRequest;
+import com.example.model.dto.auth.TokenResponse;
+import com.example.model.dto.user.UserRegistrationRequest;
+import com.example.model.dto.user.UserRegistrationResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
