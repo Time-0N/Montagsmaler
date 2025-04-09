@@ -10,11 +10,13 @@ public interface GameService {
 
     void joinGame(String roomId, User user);
 
+    void leaveGame(User user, String roomId);
+
     void toggleReady(User user, String roomId);
 
     void submitWord(User user, String word, String roomId);
 
-    void processGuess(User user, String guess, String roomId);
+    void processGuess(User user, String guess, String roomId, String sessionId);
 
     void broadcastDrawing(DrawingData data);
 
