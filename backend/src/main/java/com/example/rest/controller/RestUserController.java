@@ -1,14 +1,14 @@
 package com.example.rest.controller;
 
 import com.example.business.service.UserService;
+import com.example.model.dto.user.UserUpdateRequest;
+import com.example.model.dto.user.UserUpdateResponse;
 import com.example.model.entity.User;
 import com.example.security.CurrentUser;
 import com.example.security.UserCacheService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
@@ -23,8 +23,24 @@ public class RestUserController {
         return user;
     }
 
-    @DeleteMapping("/delete/me")
-    public void deleteMe(@CurrentUser User user) {
+    @PutMapping("/update/user")
+    public ResponseEntity<UserUpdateResponse> updateUser(
+            @CurrentUser User user,
+            @RequestBody UserUpdateRequest request
+            ) {
+        return ResponseEntity.ok(userService.updateUser(user, request));
+    }
+
+    @PatchMapping("/patch/userAboutMe")
+    public ResponseEntity<String> patchUserAboutMe(
+            @CurrentUser User user,
+            @RequestBody String updatedAboutMe
+    ) {
+        return ResponseEntity.ok(userService.patchUserAboutMe(user, updatedAboutMe));
+    }
+
+    @DeleteMapping("/delete/User")
+    public void deleteUser(@CurrentUser User user) {
         userService.deleteUser(user.getId());
         userCacheService.evict(user.getKeycloakId());
     }

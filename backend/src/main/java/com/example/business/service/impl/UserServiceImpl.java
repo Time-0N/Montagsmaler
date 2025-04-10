@@ -27,6 +27,12 @@ public class UserServiceImpl implements UserService {
     private final KeycloakService keycloakService;
 
     @Override
+    public String patchUserAboutMe(User user, String updatedAboutMe) {
+        user.setAboutMe(updatedAboutMe);
+        return updatedAboutMe;
+    }
+
+    @Override
     public UserUpdateResponse updateUser(User user, UserUpdateRequest request) {
         if (!request.username().isEmpty() && !request.username().equals(user.getUsername()) &&
                 userRepository.existsByUsername(request.username())) {
@@ -37,7 +43,7 @@ public class UserServiceImpl implements UserService {
                 userRepository.existsByEmail(request.email())) {
             throw new RuntimeException("Email is already taken");
         }
-        
+
         updateIfNotEmpty(request.username(), user::setUsername);
         updateIfNotEmpty(request.email(), user::setEmail);
         updateIfNotEmpty(request.firstName(), user::setFirstName);

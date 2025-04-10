@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface UserService {
+    String patchUserAboutMe(User user, String updatedAboutMe);
     UserUpdateResponse updateUser(User user, UserUpdateRequest request);
     UserRegistrationResponse registerUser(UserRegistrationRequest request);
     void deleteUser(UUID uuid);

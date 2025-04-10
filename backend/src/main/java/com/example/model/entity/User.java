@@ -25,6 +25,9 @@ public class User {
     private String lastName;
     private String gameWebSocketSessionId;
 
+    @Lob
+    private String aboutMe;
+
     @Column(nullable = false)
     private String keycloakId;
 }
