@@ -5,6 +5,7 @@ import com.example.config.KeycloakProperties;
 import com.example.model.dto.auth.AuthenticationRequest;
 import com.example.model.dto.auth.TokenResponse;
 import com.example.model.dto.user.UserRegistrationRequest;
+import com.example.model.dto.user.UserUpdateRequest;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
@@ -86,6 +87,30 @@ public class KeycloakServiceImpl implements KeycloakService {
             System.out.println("Failed to delete Keycloak user: " + e.getMessage());
             throw new RuntimeException("Keycloak user deletion failed", e);
         }
+    }
+
+    @Override
+    public void updateKeycloakUser(String keycloakUserId, UserUpdateRequest request) throws RuntimeException {
+            var userResource = keycloakClient.realm(properties.getRealm())
+                    .users()
+                    .get(keycloakUserId);
+
+            UserRepresentation userRep = userResource.toRepresentation();
+
+            if (request.username() != null && !request.username().isEmpty()) {
+                userRep.setUsername(request.username());
+            }
+            if (request.email() != null && !request.email().isEmpty()) {
+                userRep.setEmail(request.email());
+            }
+            if (request.firstName() != null && !request.firstName().isEmpty()) {
+                userRep.setFirstName(request.firstName());
+            }
+            if (request.lastName() != null && !request.lastName().isEmpty()) {
+                userRep.setLastName(request.lastName());
+            }
+
+            userResource.update(userRep);
     }
 
     private String extractUserId(Response response) {

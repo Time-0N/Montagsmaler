@@ -22,7 +22,6 @@ public class RestGameController {
         return ResponseEntity.ok(gameService.createGame(user));
     }
 
-    @PreAuthorize("isAuthenticated()")
     @PostMapping("/{roomId}/join")
     public ResponseEntity<Void> joinGame(
             @CurrentUser User user,
@@ -37,7 +36,7 @@ public class RestGameController {
             @CurrentUser User user,
             @PathVariable String roomId
     ) {
-        gameService.joinGame(roomId, user);
+        gameService.toggleReady(user, roomId);
         return ResponseEntity.ok().build();
     }
 

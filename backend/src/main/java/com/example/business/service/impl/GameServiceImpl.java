@@ -41,6 +41,7 @@ public class GameServiceImpl implements GameService {
             gameSession.getUsers().add(user);
             gameSession.getReadyStatus().put(user.getId(), false);
         } while (activeGameSessions.putIfAbsent(gameSession.getRoomId(), gameSession) != null);
+        broadcastGameState(gameSession.getRoomId());
         return gameSession;
     }
 
@@ -50,6 +51,7 @@ public class GameServiceImpl implements GameService {
         if (gameSession != null && gameSession.getUsers().size() < 15) {
             gameSession.getUsers().add(user);
             gameSession.getReadyStatus().put(user.getId(), false);
+            broadcastGameState(roomId);
         }
     }
 
@@ -224,6 +226,7 @@ public class GameServiceImpl implements GameService {
                                 k -> getRandomDefaultWord())
                         );
                 startDrawingPhase(gameSession);
+                broadcastGameState(gameSession.getRoomId());
                 break;
 
             case DRAWING:
@@ -234,9 +237,11 @@ public class GameServiceImpl implements GameService {
                             gameSession
                     ));
                     gameSession.setTimerSeconds(100);
+                    broadcastGameState(gameSession.getRoomId());
                 } else {
                     gameSession.setPhase(GamePhase.RESULTS);
                     gameSession.setTimerSeconds(15);
+                    broadcastGameState(gameSession.getRoomId());
                 }
                 break;
 
