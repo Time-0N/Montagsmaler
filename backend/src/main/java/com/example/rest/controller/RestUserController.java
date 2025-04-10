@@ -8,7 +8,10 @@ import com.example.security.CurrentUser;
 import com.example.security.UserCacheService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
@@ -43,5 +46,11 @@ public class RestUserController {
     public void deleteUser(@CurrentUser User user) {
         userService.deleteUser(user.getId());
         userCacheService.evict(user.getKeycloakId());
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/get/all")
+    public ResponseEntity<List<User>> getAllUsers() {
+        return ResponseEntity.ok(userService.findAllUsers());
     }
 }

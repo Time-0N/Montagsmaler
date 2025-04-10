@@ -32,18 +32,9 @@ public class CustomJwtConverter implements Converter<Jwt, AbstractAuthentication
 
         String keycloakId = jwt.getSubject();
 
-
-        //Change this to throw an error when no User can be Found!
         User user = userCache.getOrLoad(keycloakId, () -> userRepository.findByKeycloakId(keycloakId)
-                .orElseGet(() -> {
-                    User newUser = new User();
-                    newUser.setKeycloakId(keycloakId);
-                    newUser.setUsername(jwt.getClaim("preferred_username"));
-                    newUser.setEmail(jwt.getClaim("email"));
-                    newUser.setFirstName(jwt.getClaim("given_name"));
-                    newUser.setLastName(jwt.getClaim("family_name"));
-                    return userRepository.save(newUser);
-                }));
+                .orElseThrow()
+        );
 
         return new UserAuthentication(user, authorities);
     }
