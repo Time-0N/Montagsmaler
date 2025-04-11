@@ -60,6 +60,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testImplementation("com.h2database:h2")
 
     // Caching
     implementation("com.github.ben-manes.caffeine:caffeine:3.1.8")

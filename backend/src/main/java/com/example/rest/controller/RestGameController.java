@@ -3,10 +3,9 @@ package com.example.rest.controller;
 import com.example.business.service.GameService;
 import com.example.model.dao.GameSession;
 import com.example.model.entity.User;
-import com.example.security.CurrentUser;
+import com.example.security.annotation.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

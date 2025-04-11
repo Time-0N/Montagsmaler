@@ -15,5 +15,6 @@ public interface UserService {
     UserUpdateResponse updateUser(User user, UserUpdateRequest request);
     UserRegistrationResponse registerUser(UserRegistrationRequest request);
     void deleteUser(UUID uuid);
+    Optional<User> findByUsername(String username);
     List<User> findAllUsers();
 }

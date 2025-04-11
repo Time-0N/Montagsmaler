@@ -94,6 +94,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
     @Transactional
     public void deleteUser(UUID uuid) {
         User user = userRepository.findById(uuid)

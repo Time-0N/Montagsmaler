@@ -4,9 +4,10 @@ import com.example.business.service.UserService;
 import com.example.model.dto.user.UserUpdateRequest;
 import com.example.model.dto.user.UserUpdateResponse;
 import com.example.model.entity.User;
-import com.example.security.CurrentUser;
+import com.example.security.annotation.CurrentUser;
 import com.example.security.UserCacheService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class RestUserController {
     private final UserCacheService userCacheService;
 
     //Needs rewriting! Used for dev atm
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/me")
     public User getMe(@CurrentUser User user) {
         return user;
@@ -43,6 +45,7 @@ public class RestUserController {
     }
 
     @DeleteMapping("/delete/User")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@CurrentUser User user) {
         userService.deleteUser(user.getId());
         userCacheService.evict(user.getKeycloakId());

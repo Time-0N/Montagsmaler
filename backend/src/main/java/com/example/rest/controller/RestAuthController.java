@@ -6,6 +6,7 @@ import com.example.model.dto.auth.AuthenticationRequest;
 import com.example.model.dto.auth.TokenResponse;
 import com.example.model.dto.user.UserRegistrationRequest;
 import com.example.model.dto.user.UserRegistrationResponse;
+import com.example.security.annotation.PublicEndpoint;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ public class RestAuthController {
     private final UserService userService;
     private final KeycloakService keycloakService;
 
+    @PublicEndpoint(summary = "Register")
     @PostMapping("/register")
     public ResponseEntity<UserRegistrationResponse> registerUser(
             @Valid @RequestBody UserRegistrationRequest request
@@ -31,6 +33,7 @@ public class RestAuthController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @PublicEndpoint(summary = "Login")
     @PostMapping("/token")
     public ResponseEntity<TokenResponse> getToken(
             @Valid @RequestBody AuthenticationRequest request

@@ -3,7 +3,7 @@ package com.example.rest.controller;
 import com.example.business.service.GameService;
 import com.example.model.dto.game.DrawingData;
 import com.example.model.entity.User;
-import com.example.security.CurrentUser;
+import com.example.security.annotation.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
