@@ -6,6 +6,7 @@ import com.example.model.dto.auth.AuthenticationRequest;
 import com.example.model.dto.auth.TokenResponse;
 import com.example.model.dto.user.UserRegistrationRequest;
 import com.example.model.dto.user.UserRegistrationResponse;
+import com.example.rest.controller.generated.AuthApi;
 import com.example.security.annotation.PublicEndpoint;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-public class RestAuthController {
+public class RestAuthController implements AuthApi {
 
     private final UserService userService;
     private final KeycloakService keycloakService;

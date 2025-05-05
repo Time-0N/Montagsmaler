@@ -51,6 +51,7 @@ dependencies {
 
     // Swagger / OpenAPI
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
+    implementation("org.openapitools:jackson-databind-nullable:0.2.6")
 
     // Lombok
     compileOnly("org.projectlombok:lombok")

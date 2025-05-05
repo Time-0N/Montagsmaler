@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="toggle-buttons">
+    <button (click)="isLoginMode = true" [class.active]="isLoginMode">Login</button>
+    <button (click)="isLoginMode = false" [class.active]="!isLoginMode">Register</button>
+  </div>
+
+  <div *ngIf="isLoginMode" class="form-container">
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <h2>Login</h2>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" formControlName="username" required>
+        <div *ngIf="loginForm.get('username')?.errors?.['required'] && loginForm.get('username')?.touched" class="error">
+          Username is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" formControlName="password" required>
+        <div *ngIf="loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched" class="error">
+          Password is required
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="loginForm.invalid || isLoading">Login</button>
+      <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+    </form>
+  </div>
+
+  <div *ngIf="!isLoginMode" class="form-container">
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+      <h2>Register</h2>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" formControlName="username" required>
+        <div *ngIf="registerForm.get('username')?.errors?.['required'] && registerForm.get('username')?.touched" class="error">
+          Username is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" formControlName="email" required>
+        <div *ngIf="registerForm.get('email')?.errors?.['required'] && registerForm.get('email')?.touched" class="error">
+          Email is required
+        </div>
+        <div *ngIf="registerForm.get('email')?.errors?.['email']" class="error">
+          Invalid email format
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" formControlName="password" required>
+        <div *ngIf="registerForm.get('password')?.errors?.['required'] && registerForm.get('password')?.touched" class="error">
+          Password is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>First Name</label>
+        <input type="text" formControlName="firstName">
+      </div>
+
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" formControlName="lastName">
+      </div>
+
+      <button type="submit" [disabled]="registerForm.invalid || isLoading">Register</button>
+      <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+    </form>
+  </div>
+</div>

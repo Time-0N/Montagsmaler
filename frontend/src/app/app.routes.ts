@@ -1,9 +1,19 @@
 import { Routes } from '@angular/router';
-import {DummyComponent} from './pages/dummy/dummy-websocket-component/dummy.component';
+import { HomePageComponentComponent } from './pages/home-page/home-page-component/home-page-component.component';
+import { UserHomeComponentComponent } from './pages/user-home/user-home-component/user-home-component.component';
+import {authGuard} from './auth/auth.guard';
 
 export const routes: Routes = [
   {
   path: '',
-  component: DummyComponent
+  component: HomePageComponentComponent
   },
+  {
+    path: 'user-home',
+    component: UserHomeComponentComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: '**', redirectTo: ''
+  }
 ];

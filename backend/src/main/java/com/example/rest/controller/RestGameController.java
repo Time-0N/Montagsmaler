@@ -3,6 +3,7 @@ package com.example.rest.controller;
 import com.example.business.service.GameService;
 import com.example.model.dao.GameSession;
 import com.example.model.entity.User;
+import com.example.rest.controller.generated.GameApi;
 import com.example.security.annotation.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/game")
 @RequiredArgsConstructor
-public class RestGameController {
+public class RestGameController implements GameApi {
     private final GameService gameService;
 
     @PostMapping("/create")
