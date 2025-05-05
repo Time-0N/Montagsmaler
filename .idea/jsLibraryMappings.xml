@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="JavaScriptLibraryMappings">
-    <excludedPredefinedLibrary name="Montagsmaler/frontend/.gradle/nodejs/node-v20.0.0-linux-x64/lib/node_modules" />
-  </component>
-</project>
