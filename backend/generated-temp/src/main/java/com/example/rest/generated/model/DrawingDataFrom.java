@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -16,66 +17,67 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * AuthenticationRequest
+ * DrawingDataFrom
  */
 
+@JsonTypeName("DrawingData_from")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-09T14:45:29.811620744+02:00[Europe/Zurich]", comments = "Generator version: 7.13.0")
-public class AuthenticationRequest {
+public class DrawingDataFrom {
 
-  private String username;
+  private Float x;
 
-  private String password;
+  private Float y;
 
-  public AuthenticationRequest() {
+  public DrawingDataFrom() {
     super();
   }
 
   /**
    * Constructor with only required parameters
    */
-  public AuthenticationRequest(String username, String password) {
-    this.username = username;
-    this.password = password;
+  public DrawingDataFrom(Float x, Float y) {
+    this.x = x;
+    this.y = y;
   }
 
-  public AuthenticationRequest username(String username) {
-    this.username = username;
+  public DrawingDataFrom x(Float x) {
+    this.x = x;
     return this;
   }
 
   /**
-   * Get username
-   * @return username
+   * Get x
+   * @return x
    */
   @NotNull 
-  @Schema(name = "username", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("username")
-  public String getUsername() {
-    return username;
+  @Schema(name = "x", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("x")
+  public Float getX() {
+    return x;
   }
 
-  public void setUsername(String username) {
-    this.username = username;
+  public void setX(Float x) {
+    this.x = x;
   }
 
-  public AuthenticationRequest password(String password) {
-    this.password = password;
+  public DrawingDataFrom y(Float y) {
+    this.y = y;
     return this;
   }
 
   /**
-   * Get password
-   * @return password
+   * Get y
+   * @return y
    */
   @NotNull 
-  @Schema(name = "password", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("password")
-  public String getPassword() {
-    return password;
+  @Schema(name = "y", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("y")
+  public Float getY() {
+    return y;
   }
 
-  public void setPassword(String password) {
-    this.password = password;
+  public void setY(Float y) {
+    this.y = y;
   }
 
   @Override
@@ -86,22 +88,22 @@ public class AuthenticationRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AuthenticationRequest authenticationRequest = (AuthenticationRequest) o;
-    return Objects.equals(this.username, authenticationRequest.username) &&
-        Objects.equals(this.password, authenticationRequest.password);
+    DrawingDataFrom drawingDataFrom = (DrawingDataFrom) o;
+    return Objects.equals(this.x, drawingDataFrom.x) &&
+        Objects.equals(this.y, drawingDataFrom.y);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(username, password);
+    return Objects.hash(x, y);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AuthenticationRequest {\n");
-    sb.append("    username: ").append(toIndentedString(username)).append("\n");
-    sb.append("    password: ").append(toIndentedString(password)).append("\n");
+    sb.append("class DrawingDataFrom {\n");
+    sb.append("    x: ").append(toIndentedString(x)).append("\n");
+    sb.append("    y: ").append(toIndentedString(y)).append("\n");
     sb.append("}");
     return sb.toString();
   }

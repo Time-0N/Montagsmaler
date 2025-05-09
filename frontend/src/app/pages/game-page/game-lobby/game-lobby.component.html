@@ -1,0 +1,12 @@
+<ng-container *ngIf="users$ | async as users">
+  <ng-container *ngIf="readyStatus$ | async as rs">
+    <ul>
+      <li *ngFor="let user of users">
+        {{ user.username }} -
+        <span *ngIf="user.id && rs[user.id] !== undefined">
+          {{ rs[user.id] ? '✅ Ready' : '⏳ Not ready' }}
+        </span>
+      </li>
+    </ul>
+  </ng-container>
+</ng-container>

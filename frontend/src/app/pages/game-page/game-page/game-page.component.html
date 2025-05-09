@@ -1,0 +1,7 @@
+<ng-container *ngIf="session$ | async as session">
+  <app-game-lobby *ngIf="session.phase === 'LOBBY'" />
+  <app-word-submission *ngIf="session.phase === 'WORD_SUBMISSION'" />
+  <app-drawing-component *ngIf="session.phase === 'DRAWING'" />
+  <app-guessing-component *ngIf="session.phase === 'DRAWING'" />
+  <app-result-component *ngIf="session.phase === 'RESULTS'" />
+</ng-container>

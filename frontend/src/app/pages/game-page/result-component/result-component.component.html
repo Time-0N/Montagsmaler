@@ -1,0 +1,11 @@
+<div class="results-container">
+  <h2>Round Results</h2>
+
+  <ul>
+    <li *ngFor="let entry of submittedWords$ | async">
+      <strong>{{ entry.user.username }}</strong>: {{ entry.word }}
+    </li>
+  </ul>
+
+  <p class="info-text">Next round will begin shortly...</p>
+</div>

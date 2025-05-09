@@ -1,0 +1,20 @@
+<div class="guessing-container">
+  <div class="guess-input">
+    <form (ngSubmit)="sendGuess()">
+      <input
+        type="text"
+        [(ngModel)]="guess"
+        name="guess"
+        placeholder="Type your guess..."
+        autocomplete="off"
+      />
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <div class="chat-log">
+    <div *ngFor="let msg of chatMessages" [ngClass]="{ 'correct': msg.correctGuess }">
+      <strong>{{ msg.username }}:</strong> {{ msg.message }}
+    </div>
+  </div>
+</div>

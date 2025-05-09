@@ -6,7 +6,8 @@ import lombok.Data;
 public class DrawingData {
     private String roomId;
     private String senderSessionId;
-    private String strokeData;
     private String color;
-    private float lineWidth;
+    private float width;
+    private Point from;
+    private Point to;
 }

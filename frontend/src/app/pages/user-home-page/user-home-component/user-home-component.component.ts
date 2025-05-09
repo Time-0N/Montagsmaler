@@ -13,12 +13,14 @@ import { AuthWrapperService } from '../../../auth/services/auth-wrapper.service'
 import {UserEditFormComponent} from '../user-edit-form/user-edit-form.component';
 import {LogoutConfirmDialogComponent} from '../logout-confirm-dialog/logout-confirm-dialog.component';
 import {DeleteConfirmDialogComponent} from '../delete-confirm-dialog/delete-confirm-dialog.component';
+import {CreateGameButtonComponent} from '../create-game-button/create-game-button.component';
+import {JoinGameFormComponent} from '../join-game-form/join-game-form.component';
 
 
 @Component({
   selector: 'app-user-home-component',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf, AsyncPipe, UserEditFormComponent, LogoutConfirmDialogComponent, DeleteConfirmDialogComponent],
+  imports: [ReactiveFormsModule, NgIf, AsyncPipe, UserEditFormComponent, LogoutConfirmDialogComponent, DeleteConfirmDialogComponent, CreateGameButtonComponent, JoinGameFormComponent],
   templateUrl: './user-home-component.component.html',
   styleUrls: ['./user-home-component.component.scss']
 })

@@ -5,6 +5,8 @@ src/main/java/com/example/rest/generated/AuthApi.java
 src/main/java/com/example/rest/generated/GameApi.java
 src/main/java/com/example/rest/generated/UserApi.java
 src/main/java/com/example/rest/generated/model/AuthenticationRequest.java
+src/main/java/com/example/rest/generated/model/DrawingData.java
+src/main/java/com/example/rest/generated/model/DrawingDataFrom.java
 src/main/java/com/example/rest/generated/model/GameSession.java
 src/main/java/com/example/rest/generated/model/TokenResponse.java
 src/main/java/com/example/rest/generated/model/User.java

@@ -303,3 +303,49 @@ components:
           $ref: '#/components/schemas/User'
         timerSeconds:
           type: integer
+
+    DrawingData:
+      type: object
+      required:
+        - roomId
+        - senderSessionId
+        - color
+        - width
+        - from
+        - to
+      properties:
+        roomId:
+          type: string
+        senderSessionId:
+          type: string
+        color:
+          type: string
+          example: "#000000"
+        width:
+          type: number
+          format: float
+          example: 2
+        from:
+          type: object
+          required:
+            - x
+            - y
+          properties:
+            x:
+              type: number
+              format: float
+            y:
+              type: number
+              format: float
+        to:
+          type: object
+          required:
+            - x
+            - y
+          properties:
+            x:
+              type: number
+              format: float
+            y:
+              type: number
+              format: float
