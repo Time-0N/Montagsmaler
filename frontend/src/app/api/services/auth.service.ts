@@ -31,14 +31,6 @@ import { Configuration }                                     from '../configurat
 import { BaseService } from '../api.base.service';
 
 
-export interface LoginUserRequestParams {
-    authenticationRequest: AuthenticationRequest;
-}
-
-export interface RegisterUserRequestParams {
-    userRegistrationRequest: UserRegistrationRequest;
-}
-
 
 @Injectable({
   providedIn: 'root'
@@ -51,15 +43,14 @@ export class AuthService extends BaseService {
 
     /**
      * Authenticate user and get token
-     * @param requestParameters
+     * @param authenticationRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public loginUser(requestParameters: LoginUserRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<TokenResponse>;
-    public loginUser(requestParameters: LoginUserRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<TokenResponse>>;
-    public loginUser(requestParameters: LoginUserRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<TokenResponse>>;
-    public loginUser(requestParameters: LoginUserRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        const authenticationRequest = requestParameters?.authenticationRequest;
+    public loginUser(authenticationRequest: AuthenticationRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<TokenResponse>;
+    public loginUser(authenticationRequest: AuthenticationRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<TokenResponse>>;
+    public loginUser(authenticationRequest: AuthenticationRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<TokenResponse>>;
+    public loginUser(authenticationRequest: AuthenticationRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (authenticationRequest === null || authenticationRequest === undefined) {
             throw new Error('Required parameter authenticationRequest was null or undefined when calling loginUser.');
         }
@@ -113,15 +104,14 @@ export class AuthService extends BaseService {
 
     /**
      * Register a new user
-     * @param requestParameters
+     * @param userRegistrationRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public registerUser(requestParameters: RegisterUserRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<UserRegistrationResponse>;
-    public registerUser(requestParameters: RegisterUserRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<UserRegistrationResponse>>;
-    public registerUser(requestParameters: RegisterUserRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<UserRegistrationResponse>>;
-    public registerUser(requestParameters: RegisterUserRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        const userRegistrationRequest = requestParameters?.userRegistrationRequest;
+    public registerUser(userRegistrationRequest: UserRegistrationRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<UserRegistrationResponse>;
+    public registerUser(userRegistrationRequest: UserRegistrationRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<UserRegistrationResponse>>;
+    public registerUser(userRegistrationRequest: UserRegistrationRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<UserRegistrationResponse>>;
+    public registerUser(userRegistrationRequest: UserRegistrationRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (userRegistrationRequest === null || userRegistrationRequest === undefined) {
             throw new Error('Required parameter userRegistrationRequest was null or undefined when calling registerUser.');
         }

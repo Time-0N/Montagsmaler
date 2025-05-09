@@ -6,10 +6,15 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(AuthWrapperService);
   const token = auth.getAccessToken();
 
-  if (token && req.url.includes('/api/')) {
+  const publicEndpoints = ['/api/auth/token', '/api/auth/register'];
+
+  const isPublic = publicEndpoints.some(url => req.url.includes(url));
+
+  if (token && !isPublic) {
     return next(req.clone({
       setHeaders: { Authorization: `Bearer ${token}` }
     }));
   }
+
   return next(req);
 };

@@ -68,7 +68,7 @@ export class HomePageComponentComponent implements OnInit {
       password: this.loginForm.value.password
     };
 
-    this.authService.loginUser({ authenticationRequest: authRequest })
+    this.authService.loginUser(authRequest)
       .subscribe({
         next: (response) => {
           this.handleAuthentication(response);
@@ -94,7 +94,7 @@ export class HomePageComponentComponent implements OnInit {
       lastName: this.registerForm.value.lastName
     };
 
-    this.authService.registerUser({ userRegistrationRequest: registrationRequest })
+    this.authService.registerUser(registrationRequest)
       .subscribe({
         next: (response) => {
           if (response.token?.access_token) {

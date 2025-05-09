@@ -25,19 +25,6 @@ import { Configuration }                                     from '../configurat
 import { BaseService } from '../api.base.service';
 
 
-export interface JoinGameRequestParams {
-    roomId: string;
-}
-
-export interface SubmitWordRequestParams {
-    roomId: string;
-    body: string;
-}
-
-export interface ToggleReadyRequestParams {
-    roomId: string;
-}
-
 
 @Injectable({
   providedIn: 'root'
@@ -97,15 +84,14 @@ export class GameService extends BaseService {
 
     /**
      * Join a game session
-     * @param requestParameters
+     * @param roomId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public joinGame(requestParameters: JoinGameRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any>;
-    public joinGame(requestParameters: JoinGameRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpResponse<any>>;
-    public joinGame(requestParameters: JoinGameRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpEvent<any>>;
-    public joinGame(requestParameters: JoinGameRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any> {
-        const roomId = requestParameters?.roomId;
+    public joinGame(roomId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any>;
+    public joinGame(roomId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpResponse<any>>;
+    public joinGame(roomId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpEvent<any>>;
+    public joinGame(roomId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any> {
         if (roomId === null || roomId === undefined) {
             throw new Error('Required parameter roomId was null or undefined when calling joinGame.');
         }
@@ -148,19 +134,18 @@ export class GameService extends BaseService {
 
     /**
      * Submit a word
-     * @param requestParameters
+     * @param roomId 
+     * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public submitWord(requestParameters: SubmitWordRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any>;
-    public submitWord(requestParameters: SubmitWordRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpResponse<any>>;
-    public submitWord(requestParameters: SubmitWordRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpEvent<any>>;
-    public submitWord(requestParameters: SubmitWordRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any> {
-        const roomId = requestParameters?.roomId;
+    public submitWord(roomId: string, body: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any>;
+    public submitWord(roomId: string, body: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpResponse<any>>;
+    public submitWord(roomId: string, body: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpEvent<any>>;
+    public submitWord(roomId: string, body: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any> {
         if (roomId === null || roomId === undefined) {
             throw new Error('Required parameter roomId was null or undefined when calling submitWord.');
         }
-        const body = requestParameters?.body;
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling submitWord.');
         }
@@ -213,15 +198,14 @@ export class GameService extends BaseService {
 
     /**
      * Toggle ready status
-     * @param requestParameters
+     * @param roomId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public toggleReady(requestParameters: ToggleReadyRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any>;
-    public toggleReady(requestParameters: ToggleReadyRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpResponse<any>>;
-    public toggleReady(requestParameters: ToggleReadyRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpEvent<any>>;
-    public toggleReady(requestParameters: ToggleReadyRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any> {
-        const roomId = requestParameters?.roomId;
+    public toggleReady(roomId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any>;
+    public toggleReady(roomId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpResponse<any>>;
+    public toggleReady(roomId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpEvent<any>>;
+    public toggleReady(roomId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any> {
         if (roomId === null || roomId === undefined) {
             throw new Error('Required parameter roomId was null or undefined when calling toggleReady.');
         }

@@ -4,7 +4,7 @@ import com.example.business.service.UserService;
 import com.example.model.dto.user.UserUpdateRequest;
 import com.example.model.dto.user.UserUpdateResponse;
 import com.example.model.entity.User;
-import com.example.rest.controller.generated.UserApi;
+import com.example.rest.generated.UserApi;
 import com.example.security.annotation.CurrentUser;
 import com.example.security.UserCacheService;
 import lombok.RequiredArgsConstructor;
@@ -57,8 +57,9 @@ public class RestUserController implements UserApi {
     public ResponseEntity<List<com.example.rest.controller.generated.model.User>> getAllUsers() {
         return ResponseEntity.ok(
                 userService.findAllUsers().stream()
-                        .map(com.example.mappers.UserMapper::toDto)
+                        .map(com.example.mappers.UserMapper::toRest)
                         .toList()
+
         );
     }
 }

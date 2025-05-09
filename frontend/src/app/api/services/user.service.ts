@@ -29,14 +29,6 @@ import { Configuration }                                     from '../configurat
 import { BaseService } from '../api.base.service';
 
 
-export interface PatchAboutMeRequestParams {
-    body: string;
-}
-
-export interface UpdateUserRequestParams {
-    userUpdateRequest: UserUpdateRequest;
-}
-
 
 @Injectable({
   providedIn: 'root'
@@ -189,15 +181,14 @@ export class UserService extends BaseService {
 
     /**
      * Update about me
-     * @param requestParameters
+     * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public patchAboutMe(requestParameters: PatchAboutMeRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any>;
-    public patchAboutMe(requestParameters: PatchAboutMeRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpResponse<any>>;
-    public patchAboutMe(requestParameters: PatchAboutMeRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpEvent<any>>;
-    public patchAboutMe(requestParameters: PatchAboutMeRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any> {
-        const body = requestParameters?.body;
+    public patchAboutMe(body: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any>;
+    public patchAboutMe(body: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpResponse<any>>;
+    public patchAboutMe(body: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<HttpEvent<any>>;
+    public patchAboutMe(body: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext}): Observable<any> {
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling patchAboutMe.');
         }
@@ -250,15 +241,14 @@ export class UserService extends BaseService {
 
     /**
      * Update user data
-     * @param requestParameters
+     * @param userUpdateRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateUser(requestParameters: UpdateUserRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<UserUpdateResponse>;
-    public updateUser(requestParameters: UpdateUserRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<UserUpdateResponse>>;
-    public updateUser(requestParameters: UpdateUserRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<UserUpdateResponse>>;
-    public updateUser(requestParameters: UpdateUserRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
-        const userUpdateRequest = requestParameters?.userUpdateRequest;
+    public updateUser(userUpdateRequest: UserUpdateRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<UserUpdateResponse>;
+    public updateUser(userUpdateRequest: UserUpdateRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<UserUpdateResponse>>;
+    public updateUser(userUpdateRequest: UserUpdateRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<UserUpdateResponse>>;
+    public updateUser(userUpdateRequest: UserUpdateRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (userUpdateRequest === null || userUpdateRequest === undefined) {
             throw new Error('Required parameter userUpdateRequest was null or undefined when calling updateUser.');
         }

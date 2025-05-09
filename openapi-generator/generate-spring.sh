@@ -11,8 +11,8 @@ openapi-generator-cli generate \
   --library spring-boot \
   -o "$SCRIPT_DIR/../backend/generated-temp" \
   --additional-properties=interfaceOnly=true,useTags=true,useJakartaEe=true \
-  --api-package=com.example.rest.controller.generated \
-  --model-package=com.example.rest.controller.generated.model
+  --api-package=com.example.rest.generated \
+  --model-package=com.example.rest.generated.model
 
 echo "✅ Generation complete. Moving interfaces to target source directory..."
 

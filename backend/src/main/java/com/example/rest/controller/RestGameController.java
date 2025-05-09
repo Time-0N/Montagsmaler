@@ -3,7 +3,7 @@ package com.example.rest.controller;
 import com.example.business.service.GameService;
 import com.example.model.dao.GameSession;
 import com.example.model.entity.User;
-import com.example.rest.controller.generated.GameApi;
+import com.example.rest.generated.GameApi;
 import com.example.security.annotation.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

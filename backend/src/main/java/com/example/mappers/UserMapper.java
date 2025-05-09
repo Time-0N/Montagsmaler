@@ -3,33 +3,36 @@ package com.example.mappers;
 import com.example.model.entity.User;
 
 public class UserMapper {
-
-    public static com.example.rest.controller.generated.model.User toDto(User entity) {
-        if (entity == null) return null;
-
-        com.example.rest.controller.generated.model.User dto = new com.example.rest.controller.generated.model.User();
-        dto.setId(entity.getId() != null ? entity.getId() : null);
-        dto.setUsername(entity.getUsername());
-        dto.setEmail(entity.getEmail());
-        dto.setFirstName(entity.getFirstName());
-        dto.setLastName(entity.getLastName());
-        dto.setGameWebSocketSessionId(entity.getGameWebSocketSessionId());
-        dto.setAboutMe(entity.getAboutMe());
-        dto.setKeycloakId(entity.getKeycloakId());
-        return dto;
+    public static com.example.rest.controller.generated.model.User toRest(User businessType) {
+        if (businessType == null) {
+            return null;
+        }
+        com.example.rest.controller.generated.model.User rest = new com.example.rest.controller.generated.model.User();
+        rest.setId(businessType.getId());
+        rest.setUsername(businessType.getUsername());
+        rest.setEmail(businessType.getEmail());
+        rest.setFirstName(businessType.getFirstName());
+        rest.setLastName(businessType.getLastName());
+        rest.setGameWebSocketSessionId(businessType.getGameWebSocketSessionId());
+        rest.setAboutMe(businessType.getAboutMe());
+        rest.keycloakId(businessType.getKeycloakId());
+        return rest;
     }
 
-    public static User toEntity(com.example.rest.controller.generated.model.User dto) {
-        if (dto == null) return null;
-
-        User entity = new User();
-        entity.setUsername(dto.getUsername());
-        entity.setEmail(dto.getEmail());
-        entity.setFirstName(dto.getFirstName());
-        entity.setLastName(dto.getLastName());
-        entity.setGameWebSocketSessionId(dto.getGameWebSocketSessionId());
-        entity.setAboutMe(dto.getAboutMe());
-        entity.setKeycloakId(dto.getKeycloakId());
-        return entity;
+    public static User toBusinessType(com.example.rest.controller.generated.model.User rest) {
+        if (rest == null) {
+            return null;
+        }
+        User businessType = new User();
+        businessType.setId(rest.getId());
+        businessType.setUsername(rest.getUsername());
+        businessType.setEmail(rest.getEmail());
+        businessType.setFirstName(rest.getFirstName());
+        businessType.setLastName(rest.getLastName());
+        businessType.setGameWebSocketSessionId(rest.getGameWebSocketSessionId());
+        businessType.setAboutMe(businessType.getAboutMe());
+        businessType.setKeycloakId(businessType.getKeycloakId());
+        return businessType;
     }
+
 }
