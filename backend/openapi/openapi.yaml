@@ -147,22 +147,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserUpdateResponse'
 
-  /user/patch/userAboutMe:
-    patch:
-      tags:
-        - User
-      operationId: patchAboutMe
-      summary: Update about me
-      requestBody:
-        required: true
-        content:
-          text/plain:
-            schema:
-              type: string
-      responses:
-        '200':
-          description: Updated
-
   /user/delete/User:
     delete:
       tags:
@@ -271,6 +255,8 @@ components:
           type: string
         lastName:
           type: string
+        aboutMe:
+          type: string
 
     UserUpdateResponse:
       type: object
@@ -282,6 +268,8 @@ components:
         firstname:
           type: string
         lastname:
+          type: string
+        aboutMe:
           type: string
 
     GameSession:

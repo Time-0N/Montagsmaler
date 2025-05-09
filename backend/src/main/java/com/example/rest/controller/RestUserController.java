@@ -23,7 +23,6 @@ public class RestUserController implements UserApi {
     private final UserCacheService userCacheService;
 
     //Needs rewriting! Used for dev atm
-    @PreAuthorize("hasRole('USER')")
     @GetMapping("/me")
     public User getMe(@CurrentUser User user) {
         return user;
@@ -35,14 +34,6 @@ public class RestUserController implements UserApi {
             @RequestBody UserUpdateRequest request
             ) {
         return ResponseEntity.ok(userService.updateUser(user, request));
-    }
-
-    @PatchMapping("/patch/userAboutMe")
-    public ResponseEntity<String> patchUserAboutMe(
-            @CurrentUser User user,
-            @RequestBody String updatedAboutMe
-    ) {
-        return ResponseEntity.ok(userService.patchUserAboutMe(user, updatedAboutMe));
     }
 
     @DeleteMapping("/delete/User")

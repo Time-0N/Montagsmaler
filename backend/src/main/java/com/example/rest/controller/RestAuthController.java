@@ -10,7 +10,6 @@ import com.example.rest.generated.AuthApi;
 import com.example.security.annotation.PublicEndpoint;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Slf4j
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -41,9 +39,7 @@ public class RestAuthController implements AuthApi {
     public ResponseEntity<TokenResponse> getToken(
             @Valid @RequestBody AuthenticationRequest request
     ) {
-        log.info("Login attempt for user: {}", request.username());
         TokenResponse tokenResponse = keycloakService.authenticateUser(request);
-        log.info("Generated token for user: {}", request.username());
         return ResponseEntity.ok(tokenResponse);
     }
 }

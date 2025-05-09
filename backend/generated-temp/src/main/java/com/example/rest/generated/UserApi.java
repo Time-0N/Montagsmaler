@@ -35,7 +35,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-08T15:27:20.133467141+02:00[Europe/Zurich]", comments = "Generator version: 7.13.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-09T13:37:01.123759960+02:00[Europe/Zurich]", comments = "Generator version: 7.13.0")
 @Validated
 @Tag(name = "User", description = "the User API")
 public interface UserApi {
@@ -147,34 +147,6 @@ public interface UserApi {
 
 
     /**
-     * PATCH /user/patch/userAboutMe : Update about me
-     *
-     * @param body  (required)
-     * @return Updated (status code 200)
-     */
-    @Operation(
-        operationId = "patchAboutMe",
-        summary = "Update about me",
-        tags = { "User" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Updated")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.PATCH,
-        value = "/user/patch/userAboutMe",
-        consumes = { "text/plain" }
-    )
-    
-    default ResponseEntity<Void> patchAboutMe(
-        @Parameter(name = "body", description = "", required = true) @Valid @RequestBody String body
-    ) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-
-    /**
      * PUT /user/update/user : Update user data
      *
      * @param userUpdateRequest  (required)
@@ -203,7 +175,7 @@ public interface UserApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"firstname\" : \"firstname\", \"email\" : \"email\", \"username\" : \"username\", \"lastname\" : \"lastname\" }";
+                    String exampleString = "{ \"firstname\" : \"firstname\", \"email\" : \"email\", \"username\" : \"username\", \"lastname\" : \"lastname\", \"aboutMe\" : \"aboutMe\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

@@ -1,1 +1,32 @@
-<p>user-home-component works!</p>
+<div *ngIf="user$ | async as user">
+  <div *ngIf="!editMode">
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>First Name:</strong> {{ user.firstName }}</p>
+    <p><strong>Last Name:</strong> {{ user.lastName }}</p>
+    <p><strong>About Me:</strong> {{ user.aboutMe }}</p>
+    <button (click)="toggleEdit()">Edit</button>
+  </div>
+
+  <app-user-edit-form
+    *ngIf="editMode"
+    [user]="user"
+    (submitForm)="handleUpdate($event)"
+    (cancelEdit)="toggleEdit()"
+  />
+
+  <button (click)="openLogoutDialog()">Logout</button>
+  <button (click)="openDeleteDialog()">Delete Account</button>
+
+  <app-logout-confirm-dialog
+    *ngIf="showLogoutDialog"
+    (confirmed)="onLogoutConfirmed(); showLogoutDialog = false"
+    (cancelled)="showLogoutDialog = false"
+  />
+
+  <app-delete-confirm-dialog
+    *ngIf="showDeleteDialog"
+    (confirmed)="onDeleteConfirmed(); showDeleteDialog = false"
+    (cancelled)="showDeleteDialog = false"
+  />
+</div>

@@ -19,7 +19,7 @@ import jakarta.annotation.Generated;
  * UserUpdateResponse
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-08T15:27:20.133467141+02:00[Europe/Zurich]", comments = "Generator version: 7.13.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-09T13:37:01.123759960+02:00[Europe/Zurich]", comments = "Generator version: 7.13.0")
 public class UserUpdateResponse {
 
   private @Nullable String username;
@@ -29,6 +29,8 @@ public class UserUpdateResponse {
   private @Nullable String firstname;
 
   private @Nullable String lastname;
+
+  private @Nullable String aboutMe;
 
   public UserUpdateResponse username(String username) {
     this.username = username;
@@ -110,6 +112,26 @@ public class UserUpdateResponse {
     this.lastname = lastname;
   }
 
+  public UserUpdateResponse aboutMe(String aboutMe) {
+    this.aboutMe = aboutMe;
+    return this;
+  }
+
+  /**
+   * Get aboutMe
+   * @return aboutMe
+   */
+  
+  @Schema(name = "aboutMe", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("aboutMe")
+  public String getAboutMe() {
+    return aboutMe;
+  }
+
+  public void setAboutMe(String aboutMe) {
+    this.aboutMe = aboutMe;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -122,12 +144,13 @@ public class UserUpdateResponse {
     return Objects.equals(this.username, userUpdateResponse.username) &&
         Objects.equals(this.email, userUpdateResponse.email) &&
         Objects.equals(this.firstname, userUpdateResponse.firstname) &&
-        Objects.equals(this.lastname, userUpdateResponse.lastname);
+        Objects.equals(this.lastname, userUpdateResponse.lastname) &&
+        Objects.equals(this.aboutMe, userUpdateResponse.aboutMe);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(username, email, firstname, lastname);
+    return Objects.hash(username, email, firstname, lastname, aboutMe);
   }
 
   @Override
@@ -138,6 +161,7 @@ public class UserUpdateResponse {
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    firstname: ").append(toIndentedString(firstname)).append("\n");
     sb.append("    lastname: ").append(toIndentedString(lastname)).append("\n");
+    sb.append("    aboutMe: ").append(toIndentedString(aboutMe)).append("\n");
     sb.append("}");
     return sb.toString();
   }

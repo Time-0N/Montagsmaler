@@ -14,5 +14,6 @@ export interface UserUpdateResponse {
     email?: string;
     firstname?: string;
     lastname?: string;
+    aboutMe?: string;
 }
 

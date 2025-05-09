@@ -5,6 +5,11 @@ import { routes } from './app.routes';
 import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import {authInterceptor} from './core/interceptors/auth.interceptor';
 import {BASE_PATH} from './api';
+import {provideState, provideStore} from '@ngrx/store';
+import {provideEffects} from '@ngrx/effects';
+import {UserStoreEffects} from './store/user-store/user-store.effects';
+import {userFeatureName, userReducer} from './store/user-store/user-store.reducer';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,6 +18,10 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(
       withInterceptors([authInterceptor])
-    )
+    ),
+    provideStore(),
+    provideState(userFeatureName, userReducer),
+    provideEffects([UserStoreEffects]),
+    provideStoreDevtools({ maxAge: 25, logOnly: false })
   ]
 };

@@ -7,6 +7,7 @@ public record UserUpdateRequest(
         @Size(min = 3, max = 20) String username,
         @Email String email,
         String firstName,
-        String lastName
+        String lastName,
+        String aboutMe
 ) {
 }

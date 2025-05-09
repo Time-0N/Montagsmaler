@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,20 +27,17 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final KeycloakService keycloakService;
 
-    @Override
-    public String patchUserAboutMe(User user, String updatedAboutMe) {
-        user.setAboutMe(updatedAboutMe);
-        return updatedAboutMe;
-    }
 
     @Override
     public UserUpdateResponse updateUser(User user, UserUpdateRequest request) {
-        if (!request.username().isEmpty() && !request.username().equals(user.getUsername()) &&
+        if (StringUtils.hasText(request.username()) &&
+                !request.username().equals(user.getUsername()) &&
                 userRepository.existsByUsername(request.username())) {
             throw new RuntimeException("Username is already taken");
         }
 
-        if (!request.email().isEmpty() && !request.email().equals(user.getEmail()) &&
+        if (StringUtils.hasText(request.email()) &&
+                !request.email().equals(user.getEmail()) &&
                 userRepository.existsByEmail(request.email())) {
             throw new RuntimeException("Email is already taken");
         }
@@ -48,19 +46,22 @@ public class UserServiceImpl implements UserService {
         updateIfNotEmpty(request.email(), user::setEmail);
         updateIfNotEmpty(request.firstName(), user::setFirstName);
         updateIfNotEmpty(request.lastName(), user::setLastName);
+        updateIfNotEmpty(request.aboutMe(), user::setAboutMe);
 
         try {
             keycloakService.updateKeycloakUser(user.getKeycloakId(), request);
         } catch (Exception e) {
             throw new RuntimeException("Failed to update Keycloak user", e);
         }
+
         userRepository.save(user);
 
         return new UserUpdateResponse(
                 user.getUsername(),
                 user.getEmail(),
                 user.getFirstName(),
-                user.getLastName()
+                user.getLastName(),
+                user.getAboutMe()
         );
     }
 

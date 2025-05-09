@@ -19,7 +19,7 @@ import jakarta.annotation.Generated;
  * UserUpdateRequest
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-08T15:27:20.133467141+02:00[Europe/Zurich]", comments = "Generator version: 7.13.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-09T13:37:01.123759960+02:00[Europe/Zurich]", comments = "Generator version: 7.13.0")
 public class UserUpdateRequest {
 
   private @Nullable String username;
@@ -29,6 +29,8 @@ public class UserUpdateRequest {
   private @Nullable String firstName;
 
   private @Nullable String lastName;
+
+  private @Nullable String aboutMe;
 
   public UserUpdateRequest username(String username) {
     this.username = username;
@@ -110,6 +112,26 @@ public class UserUpdateRequest {
     this.lastName = lastName;
   }
 
+  public UserUpdateRequest aboutMe(String aboutMe) {
+    this.aboutMe = aboutMe;
+    return this;
+  }
+
+  /**
+   * Get aboutMe
+   * @return aboutMe
+   */
+  
+  @Schema(name = "aboutMe", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("aboutMe")
+  public String getAboutMe() {
+    return aboutMe;
+  }
+
+  public void setAboutMe(String aboutMe) {
+    this.aboutMe = aboutMe;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -122,12 +144,13 @@ public class UserUpdateRequest {
     return Objects.equals(this.username, userUpdateRequest.username) &&
         Objects.equals(this.email, userUpdateRequest.email) &&
         Objects.equals(this.firstName, userUpdateRequest.firstName) &&
-        Objects.equals(this.lastName, userUpdateRequest.lastName);
+        Objects.equals(this.lastName, userUpdateRequest.lastName) &&
+        Objects.equals(this.aboutMe, userUpdateRequest.aboutMe);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(username, email, firstName, lastName);
+    return Objects.hash(username, email, firstName, lastName, aboutMe);
   }
 
   @Override
@@ -138,6 +161,7 @@ public class UserUpdateRequest {
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
     sb.append("    lastName: ").append(toIndentedString(lastName)).append("\n");
+    sb.append("    aboutMe: ").append(toIndentedString(aboutMe)).append("\n");
     sb.append("}");
     return sb.toString();
   }
