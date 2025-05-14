@@ -191,17 +191,17 @@ components:
     TokenResponse:
       type: object
       properties:
-        access_token:
+        accessToken:
           type: string
-        refresh_token:
+        refreshToken:
           type: string
-        expires_in:
+        expiresIn:
           type: integer
           format: int64
-        refresh_expires_in:
+        refreshExpiresIn:
           type: integer
           format: int64
-        token_type:
+        tokenType:
           type: string
 
     UserRegistrationRequest:
@@ -266,9 +266,9 @@ components:
           type: string
         email:
           type: string
-        firstname:
+        firstName:
           type: string
-        lastname:
+        lastName:
           type: string
         aboutMe:
           type: string

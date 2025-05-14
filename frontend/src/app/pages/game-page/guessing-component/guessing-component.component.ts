@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { WebSocketService } from '../../../service/web-socket.service';
 import { selectCurrentDrawer } from '../../../store/game-store/game-store.selectors';
-import { User } from '../../../api/models/user';
+import { User } from '../../../api/model/user';
 import { UserService } from '../../../api/services/user.service';
 
 @Component({
@@ -29,7 +29,7 @@ export class GuessingComponentComponent {
     this.userService.getCurrentUser().subscribe(user => this.user = user);
 
     this.store.select(selectCurrentDrawer).subscribe(drawer => {
-      this.currentDrawerId = drawer?.id ?? null;
+      this.currentDrawerId = drawer?.gameWebSocketSessionId ?? null;
     });
 
     this.wsService.chatReceived$.subscribe((msg: any) => {
@@ -38,7 +38,7 @@ export class GuessingComponentComponent {
   }
 
   sendGuess(): void {
-    if (!this.guess.trim() || this.user?.id === this.currentDrawerId) return;
+    if (!this.guess.trim() || this.user?.gameWebSocketSessionId === this.currentDrawerId) return;
 
     this.wsService.sendGuess(this.roomId, this.guess.trim());
     this.guess = '';

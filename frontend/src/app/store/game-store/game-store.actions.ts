@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { GameSession } from '../../api/models/gameSession'
+import { GameSession } from '../../api/model/gameSession'
 
 const actionName = '[Game]';
 

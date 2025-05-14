@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../api/services/auth.service';
-import { TokenResponse } from '../../api/models/tokenResponse';
+import { AuthService } from '../api/services/auth.service';
+import { TokenResponse } from '../api/model/tokenResponse';
 
 @Injectable({ providedIn: 'root' })
 export class AuthWrapperService {
@@ -11,8 +11,8 @@ export class AuthWrapperService {
   ) {}
 
   storeToken(response: TokenResponse): void {
-    localStorage.setItem('access_token', response.access_token ?? '');
-    localStorage.setItem('refresh_token', response.refresh_token ?? '');
+    localStorage.setItem('access_token', response.accessToken ?? '');
+    localStorage.setItem('refresh_token', response.refreshToken ?? '');
   }
 
   getAccessToken(): string | null {

@@ -5,11 +5,11 @@ import { Store } from '@ngrx/store';
 import { Observable, Subject, filter, takeUntil, take } from 'rxjs';
 import { Router } from '@angular/router';
 
-import { User } from '../../../api/models/user';
-import { UserUpdateRequest } from '../../../api/models/userUpdateRequest';
+import { User } from '../../../api/model/user';
+import { UserUpdateRequest } from '../../../api/model/userUpdateRequest';
 import { updateUser, deleteUser } from '../../../store/user-store/user-store.actions';
 import { selectUser, selectUserLoading } from '../../../store/user-store/user-store.selectors';
-import { AuthWrapperService } from '../../../auth/services/auth-wrapper.service';
+import { AuthWrapperService } from '../../../service/auth-wrapper.service';
 import {UserEditFormComponent} from '../user-edit-form/user-edit-form.component';
 import {LogoutConfirmDialogComponent} from '../logout-confirm-dialog/logout-confirm-dialog.component';
 import {DeleteConfirmDialogComponent} from '../delete-confirm-dialog/delete-confirm-dialog.component';

@@ -9,6 +9,7 @@ import com.example.config.KeycloakProperties;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class KeycloakServiceImpl implements KeycloakService {
@@ -90,27 +92,38 @@ public class KeycloakServiceImpl implements KeycloakService {
     }
 
     @Override
-    public void updateKeycloakUser(String keycloakUserId, UserUpdateRequest request) throws RuntimeException {
-            var userResource = keycloakClient.realm(properties.getRealm())
-                    .users()
-                    .get(keycloakUserId);
+    public void updateKeycloakUser(String keycloakUserId, UserUpdateRequest request) {
+        var userResource = keycloakClient.realm(properties.getRealm())
+                .users()
+                .get(keycloakUserId);
 
-            UserRepresentation userRep = userResource.toRepresentation();
+        UserRepresentation userRep = userResource.toRepresentation();
 
-            if (request.getUsername() != null && !request.getUsername().isEmpty()) {
-                userRep.setUsername(request.getUsername());
-            }
-            if (request.getEmail() != null && !request.getEmail().isEmpty()) {
-                userRep.setEmail(request.getEmail());
-            }
-            if (request.getFirstName() != null && !request.getFirstName().isEmpty()) {
-                userRep.setFirstName(request.getFirstName());
-            }
-            if (request.getLastName() != null && !request.getLastName().isEmpty()) {
-                userRep.setLastName(request.getLastName());
-            }
+        if (request.getUsername() != null &&
+                !request.getUsername().isBlank() &&
+                !request.getUsername().equals(userRep.getUsername())) {
+            userRep.setUsername(request.getUsername());
+        }
 
+        if (request.getEmail() != null &&
+                !request.getEmail().isBlank() &&
+                !request.getEmail().equals(userRep.getEmail())) {
+            userRep.setEmail(request.getEmail());
+        }
+
+        if (request.getFirstName() != null && !request.getFirstName().isBlank()) {
+            userRep.setFirstName(request.getFirstName());
+        }
+
+        if (request.getLastName() != null && !request.getLastName().isBlank()) {
+            userRep.setLastName(request.getLastName());
+        }
+
+        try {
             userResource.update(userRep);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to update Keycloak user", e);
+        }
     }
 
     private String extractUserId(Response response) {

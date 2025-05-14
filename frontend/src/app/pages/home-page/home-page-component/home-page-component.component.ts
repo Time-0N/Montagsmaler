@@ -3,10 +3,10 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../../../api/services/auth.service';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
-import { AuthWrapperService } from '../../../auth/services/auth-wrapper.service';
-import { AuthenticationRequest } from '../../../api/models/authenticationRequest';
-import { UserRegistrationRequest } from '../../../api/models/userRegistrationRequest';
-import { TokenResponse } from '../../../api/models/tokenResponse';
+import { AuthWrapperService } from '../../../service/auth-wrapper.service';
+import { AuthenticationRequest } from '../../../api/model/authenticationRequest';
+import { UserRegistrationRequest } from '../../../api/model/userRegistrationRequest';
+import { TokenResponse } from '../../../api/model/tokenResponse';
 
 
 @Component({
@@ -109,7 +109,7 @@ export class HomePageComponentComponent implements OnInit {
   }
 
   private handleAuthentication(tokenResponse: TokenResponse): void {
-    if (!tokenResponse?.access_token) {
+    if (!tokenResponse?.accessToken) {
       this.errorMessage = 'Invalid authentication response';
       this.isLoading = false;
       return;

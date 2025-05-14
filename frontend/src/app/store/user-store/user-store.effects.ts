@@ -4,7 +4,7 @@ import { UserService } from '../../api/services/user.service';
 import * as UserActions from './user-store.actions';
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { Router } from '@angular/router';
-import { AuthWrapperService } from '../../auth/services/auth-wrapper.service';
+import { AuthWrapperService } from '../../service/auth-wrapper.service';
 import {userDataResolverExecuted} from './user-store.actions';
 
 @Injectable()

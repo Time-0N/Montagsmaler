@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { selectCurrentSession } from '../../../store/game-store/game-store.selectors';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { User } from '../../../api/models/user';
+import { User } from '../../../api/model/user';
 
 @Component({
   selector: 'app-result-component',
@@ -21,9 +21,9 @@ export class ResultComponentComponent {
       map(session => {
         const users = session?.users ?? [];
         const words = session?.submittedWords ?? {};
-        return users.map(user => ({
+        return users.map((user: any) => ({
           user,
-          word: words[user.id ?? ''] ?? 'N/A'
+          word: words[user ?? ''] ?? 'N/A'
         }));
       })
     );

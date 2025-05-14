@@ -3,8 +3,8 @@
     <ul>
       <li *ngFor="let user of users">
         {{ user.username }} -
-        <span *ngIf="user.id && rs[user.id] !== undefined">
-          {{ rs[user.id] ? '✅ Ready' : '⏳ Not ready' }}
+        <span *ngIf="user.gameWebSocketSessionId && rs[user.gameWebSocketSessionId] !== undefined">
+          {{ rs[user.gameWebSocketSessionId] ? '✅ Ready' : '⏳ Not ready' }}
         </span>
       </li>
     </ul>

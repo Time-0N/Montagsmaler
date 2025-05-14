@@ -2,6 +2,31 @@ import com.github.gradle.node.npm.task.NpmTask
 
 plugins {
   id("com.github.node-gradle.node") version "7.0.0"
+  id("org.openapi.generator") version "7.7.0"
+}
+
+val generateFrontendApi by tasks.registering(org.openapitools.generator.gradle.plugin.tasks.GenerateTask::class) {
+  inputSpec.set("$rootDir/docs/openapi/openapi.yaml")
+  generatorName.set("typescript-angular")
+  outputDir.set("$rootDir/frontend/src/app/api")
+
+  configOptions.set(
+    mapOf(
+      "ngVersion" to "16.0.0",
+      "providedInRoot" to "true",
+      "useTags" to "true",
+      "modelPackage" to "models",
+      "apiPackage" to "services",
+      "apiModulePrefix" to ""
+    )
+  )
+
+  globalProperties.set(
+    mapOf(
+      "models" to "",
+      "apis" to ""
+    )
+  )
 }
 
 node {

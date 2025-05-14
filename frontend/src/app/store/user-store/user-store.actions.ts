@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { UserUpdateRequest } from '../../api/models/userUpdateRequest';
-import {User} from '../../api/models/user';
+import { UserUpdateRequest } from '../../api/model/userUpdateRequest';
+import {User} from '../../api/model/user';
 
 const actionName = '[user]';
 

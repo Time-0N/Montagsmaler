@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { fabric } from 'fabric';
 import { WebSocketService } from '../../../service/web-socket.service';
 import { Store } from '@ngrx/store';
-import { User } from '../../../api/models/user';
+import { User } from '../../../api/model/user';
 import { UserService } from '../../../api/services/user.service';
 import { selectCurrentDrawer } from '../../../store/game-store/game-store.selectors';
 
@@ -37,14 +37,14 @@ export class DrawingComponentComponent implements OnInit, AfterViewInit {
       this.user = user;
 
       this.store.select(selectCurrentDrawer).subscribe(drawer => {
-        this.canDraw = drawer?.id === this.user?.id;
+        this.canDraw = drawer?.gameWebSocketSessionId === this.user?.gameWebSocketSessionId;
         if (this.canvas) {
           this.canvas.isDrawingMode = this.canDraw;
         }
       });
 
       this.wsService.drawingReceived$.subscribe(data => {
-        if (data.senderSessionId !== this.user?.id && data.path) {
+        if (data.senderSessionId !== this.user?.gameWebSocketSessionId && data.path) {
           fabric.util.enlivenObjects(
             [data.path] as any[],
             (objects: fabric.Object[]) => {
@@ -73,7 +73,7 @@ export class DrawingComponentComponent implements OnInit, AfterViewInit {
       const drawingData = {
         roomId: this.roomId,
         path: path.toObject(),
-        senderSessionId: this.user?.id
+        senderSessionId: this.user?.gameWebSocketSessionId
       };
       this.wsService.sendDrawing(this.roomId, drawingData);
     });

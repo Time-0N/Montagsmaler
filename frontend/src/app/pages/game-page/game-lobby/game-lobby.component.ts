@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { selectCurrentSession } from '../../../store/game-store/game-store.selectors';
 import { toggleReady } from '../../../store/game-store/game-store.actions';
-import { User } from '../../../api/models/user';
+import { User } from '../../../api/model/user';
 import { UserService } from '../../../api/services/user.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
