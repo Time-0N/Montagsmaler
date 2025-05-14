@@ -1,16 +1,15 @@
 package com.example.rest.controller;
 
-import com.example.business.service.KeycloakService;
-import com.example.business.service.UserService;
-import com.example.model.dto.auth.AuthenticationRequest;
-import com.example.model.dto.auth.TokenResponse;
-import com.example.model.dto.user.UserRegistrationRequest;
-import com.example.model.dto.user.UserRegistrationResponse;
 import com.example.rest.generated.AuthApi;
+import com.example.rest.generated.model.AuthenticationRequest;
+import com.example.rest.generated.model.TokenResponse;
+import com.example.rest.generated.model.UserRegistrationRequest;
+import com.example.rest.generated.model.UserRegistrationResponse;
+import com.example.service.KeycloakService;
+import com.example.service.UserService;
 import com.example.security.annotation.PublicEndpoint;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,21 +24,19 @@ public class RestAuthController implements AuthApi {
     private final UserService userService;
     private final KeycloakService keycloakService;
 
-    @PublicEndpoint(summary = "Register")
-    @PostMapping("/register")
-    public ResponseEntity<UserRegistrationResponse> registerUser(
-            @Valid @RequestBody UserRegistrationRequest request
-    ) {
-        UserRegistrationResponse response = userService.registerUser(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
-
+    @Override
     @PublicEndpoint(summary = "Login")
     @PostMapping("/token")
-    public ResponseEntity<TokenResponse> getToken(
-            @Valid @RequestBody AuthenticationRequest request
-    ) {
-        TokenResponse tokenResponse = keycloakService.authenticateUser(request);
+    public ResponseEntity<TokenResponse> loginUser(@Valid @RequestBody AuthenticationRequest authenticationRequest) {
+        TokenResponse tokenResponse = keycloakService.authenticateUser(authenticationRequest);
         return ResponseEntity.ok(tokenResponse);
+    }
+
+    @Override
+    @PublicEndpoint(summary = "Register")
+    @PostMapping("/register")
+    public ResponseEntity<UserRegistrationResponse> registerUser(@Valid @RequestBody UserRegistrationRequest userRegistrationRequest) {
+        UserRegistrationResponse response = userService.registerUser(userRegistrationRequest);
+        return ResponseEntity.ok(response);
     }
 }

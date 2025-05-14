@@ -1,6 +1,5 @@
 export * from './authenticationRequest';
 export * from './drawingData';
-export * from './drawingDataFrom';
 export * from './gameSession';
 export * from './tokenResponse';
 export * from './user';

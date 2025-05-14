@@ -3,10 +3,46 @@ plugins {
     id("io.spring.dependency-management") version "1.1.4"
     id("java")
     id("com.google.cloud.tools.jib") version "3.4.0"
+    id("org.openapi.generator") version "7.7.0"
 }
 
 group = "com.example"
 version = "0.0.1-SNAPSHOT"
+
+
+// === OpenAPI config ===
+val openApiSpec = "$rootDir/docs/openapi/openapi.yaml"
+
+openApiGenerate {
+    inputSpec.set(openApiSpec)
+    generatorName.set("spring")
+    outputDir.set("$projectDir/src/main/java")
+
+    apiPackage.set("com.example.rest.generated")
+    modelPackage.set("com.example.rest.generated.model")
+    invokerPackage.set("com.example.rest.generated")
+
+    globalProperties.set(
+        mapOf(
+            "apis" to "",
+            "models" to "",
+            "supportingFiles" to "false"
+        )
+    )
+
+    configOptions.set(
+        mapOf(
+            "useJakartaEe" to "true",
+            "useSpringBoot3" to "true",
+            "interfaceOnly" to "true",
+            "skipDefaultInterface" to "true",
+            "sourceFolder" to "",
+            "additionalModelTypeAnnotations" to "@lombok.Data @lombok.AllArgsConstructor @lombok.Builder"
+        )
+    )
+}
+
+
 
 java {
     toolchain {

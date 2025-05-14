@@ -1,11 +1,12 @@
 package com.example.rest.controller;
 
-import com.example.business.service.UserService;
-import com.example.model.dto.user.UserUpdateRequest;
-import com.example.model.dto.user.UserUpdateResponse;
-import com.example.model.entity.User;
+import com.example.mappers.UserMapper;
 import com.example.rest.generated.UserApi;
-import com.example.security.annotation.CurrentUser;
+import com.example.rest.generated.model.User;
+import com.example.rest.generated.model.UserUpdateRequest;
+import com.example.rest.generated.model.UserUpdateResponse;
+import com.example.security.util.CurrentUserProvider;
+import com.example.service.UserService;
 import com.example.security.UserCacheService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,36 +22,41 @@ import java.util.List;
 public class RestUserController implements UserApi {
     private final UserService userService;
     private final UserCacheService userCacheService;
+    private final CurrentUserProvider currentUserProvider;
 
-    //Needs rewriting! Used for dev atm
-    @GetMapping("/me")
-    public User getMe(@CurrentUser User user) {
-        return user;
-    }
-
-    @PutMapping("/update/user")
-    public ResponseEntity<UserUpdateResponse> updateUser(
-            @CurrentUser User user,
-            @RequestBody UserUpdateRequest request
-            ) {
-        return ResponseEntity.ok(userService.updateUser(user, request));
-    }
-
+    @Override
     @DeleteMapping("/delete/User")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUser(@CurrentUser User user) {
-        userService.deleteUser(user.getId());
-        userCacheService.evict(user.getKeycloakId());
+    public ResponseEntity<Void> deleteUser() {
+        com.example.data.model.entity.User currentUser = currentUserProvider.getCurrentUser();
+        userService.deleteUser(currentUser.getId());
+        userCacheService.evict(currentUser.getKeycloakId());
+
+        return ResponseEntity.noContent().build();
     }
 
+    @Override
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/get/all")
-    public ResponseEntity<List<com.example.rest.controller.generated.model.User>> getAllUsers() {
+    public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(
                 userService.findAllUsers().stream()
-                        .map(com.example.mappers.UserMapper::toRest)
+                        .map(UserMapper::toRest)
                         .toList()
-
         );
+    }
+
+    @Override
+    @GetMapping("/me")
+    public ResponseEntity<User> getCurrentUser() {
+        com.example.data.model.entity.User currentUser = currentUserProvider.getCurrentUser();
+        return ResponseEntity.ok(UserMapper.toRest(currentUser));
+    }
+
+    @Override
+    @PutMapping("/update/user")
+    public ResponseEntity<UserUpdateResponse> updateUser(UserUpdateRequest userUpdateRequest) {
+        com.example.data.model.entity.User currentUser = currentUserProvider.getCurrentUser();
+        return ResponseEntity.ok(userService.updateUser(currentUser, userUpdateRequest));
     }
 }

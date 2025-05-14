@@ -8,6 +8,9 @@ export const gameInitialState: GameState = {
   error: null
 };
 
+
+export const gameFeatureKey = 'game';
+
 export const gameReducer = createReducer(
   gameInitialState,
 

@@ -1,6 +1,6 @@
 package com.example.data.repository;
 
-import com.example.model.entity.User;
+import com.example.data.model.entity.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

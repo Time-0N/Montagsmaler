@@ -12,6 +12,7 @@ export class CreateGameButtonComponent {
   constructor(private store: Store) {}
 
   create(): void {
+    console.log('[Component] Dispatching createGame');
     this.store.dispatch(createGame());
   }
 }

@@ -1,6 +1,6 @@
 package com.example.config;
 
-import com.example.model.entity.User;
+import com.example.data.model.entity.User;
 import com.example.security.annotation.CurrentUser;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

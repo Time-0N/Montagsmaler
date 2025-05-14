@@ -7,15 +7,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { DrawingDataFrom } from './drawingDataFrom';
 
 
 export interface DrawingData { 
     roomId: string;
+    /**
+     * Serialized Fabric.js path object
+     */
+    path: { [key: string]: any; };
     senderSessionId: string;
-    color: string;
-    width: number;
-    from: DrawingDataFrom;
-    to: DrawingDataFrom;
 }
 

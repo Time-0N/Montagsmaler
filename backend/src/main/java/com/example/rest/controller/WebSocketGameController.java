@@ -1,8 +1,8 @@
 package com.example.rest.controller;
 
-import com.example.business.service.GameService;
-import com.example.model.dto.game.DrawingData;
-import com.example.model.entity.User;
+import com.example.rest.generated.model.DrawingData;
+import com.example.service.GameService;
+import com.example.data.model.entity.User;
 import com.example.security.annotation.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -37,7 +37,9 @@ public class WebSocketGameController {
             @Payload DrawingData data,
             @DestinationVariable String roomId
     ) {
+        data.setRoomId(roomId);
         data.setSenderSessionId(user.getId().toString());
+
         gameService.broadcastDrawing(data);
     }
 }

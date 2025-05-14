@@ -10,6 +10,8 @@ import {provideEffects} from '@ngrx/effects';
 import {UserStoreEffects} from './store/user-store/user-store.effects';
 import {userFeatureName, userReducer} from './store/user-store/user-store.reducer';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
+import {GameStoreEffects} from './store/game-store/game-store.effects';
+import {gameFeatureKey, gameReducer} from './store/game-store/game-store.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,8 +22,9 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([authInterceptor])
     ),
     provideStore(),
+    provideState(gameFeatureKey, gameReducer),
     provideState(userFeatureName, userReducer),
-    provideEffects([UserStoreEffects]),
+    provideEffects([UserStoreEffects, GameStoreEffects]),
     provideStoreDevtools({ maxAge: 25, logOnly: false })
   ]
 };

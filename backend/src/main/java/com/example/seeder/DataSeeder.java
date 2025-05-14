@@ -1,9 +1,9 @@
 package com.example.seeder;
 
-import com.example.business.service.KeycloakService;
-import com.example.business.service.UserService;
-import com.example.model.dto.user.UserRegistrationRequest;
-import com.example.model.dto.user.UserRegistrationResponse;
+import com.example.rest.generated.model.UserRegistrationRequest;
+import com.example.rest.generated.model.UserRegistrationResponse;
+import com.example.service.KeycloakService;
+import com.example.service.UserService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
@@ -22,7 +22,7 @@ public class DataSeeder {
         // 🔥 STEP 1: Delete all users via UserService
         userService.findAllUsers().forEach(user -> {
             try {
-                userService.deleteUser(user.getId()); // ✅ this handles Keycloak + DB + cache
+                userService.deleteUser(user.getId()); // ✅ handles Keycloak + DB + cache
                 System.out.println("🗑️ Deleted user: " + user.getUsername());
             } catch (Exception e) {
                 System.out.println("⚠️ Failed to delete user '" + user.getUsername() + "': " + e.getMessage());
@@ -31,20 +31,21 @@ public class DataSeeder {
 
         System.out.println("🧹 All users deleted.");
 
-        // 🚀 STEP 2: Create test user via registration
-        try {
-            UserRegistrationRequest testUser = new UserRegistrationRequest(
-                    "testuser",
-                    "testuser@example.com",
-                    "password123",
-                    "Test",
-                    "User"
-            );
+        // 🚀 STEP 2: Register 3 test users
+        createTestUser("testuser1", "testuser1@example.com", "password123", "Test", "UserOne");
+        createTestUser("testuser2", "testuser2@example.com", "password123", "Test", "UserTwo");
+        createTestUser("testuser3", "testuser3@example.com", "password123", "Test", "UserThree");
+    }
 
-            UserRegistrationResponse response = userService.registerUser(testUser);
-            System.out.println("✅ Test user created: " + response.username());
+    private void createTestUser(String username, String email, String password, String firstName, String lastName) {
+        try {
+            UserRegistrationRequest request = new UserRegistrationRequest(
+                    username, email, password, firstName, lastName
+            );
+            UserRegistrationResponse response = userService.registerUser(request);
+            System.out.println("✅ Created user: " + response.getUsername());
         } catch (Exception e) {
-            System.out.println("❌ Failed to create test user: " + e.getMessage());
+            System.out.println("❌ Failed to create user '" + username + "': " + e.getMessage());
         }
     }
 }

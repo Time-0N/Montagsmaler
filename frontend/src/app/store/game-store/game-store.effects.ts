@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { GameService } from '../../api/services/game.service';
 import * as GameActions from './game-store.actions';
-import { catchError, map, mergeMap, of } from 'rxjs';
+import {catchError, map, mergeMap, of, tap} from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable()
@@ -16,6 +16,10 @@ export class GameStoreEffects {
       ofType(GameActions.createGame),
       mergeMap(() =>
         this.gameService.createGame().pipe(
+          tap(session => {
+            console.log('[Effect] Game created:', session);
+            this.router.navigate(['/game', session.roomId]);
+          }),
           map(session => GameActions.createGameSuccess({ session })),
           catchError(error => of(GameActions.createGameFailure({ error })))
         )
@@ -33,6 +37,17 @@ export class GameStoreEffects {
         )
       )
     )
+  );
+
+  navigateOnJoinSuccess$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType(GameActions.joinGameSuccess),
+        tap(({ session }) => {
+          console.log('[Effect] Navigating to joined game:', session.roomId);
+          this.router.navigate(['/game', session.roomId]);
+        })
+      ),
+    { dispatch: false }
   );
 
   toggleReady$ = createEffect(() =>

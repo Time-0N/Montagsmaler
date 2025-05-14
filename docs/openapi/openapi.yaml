@@ -1,0 +1,330 @@
+openapi: 3.0.0
+info:
+  title: Montagsmaler API
+  version: 1.0.0
+servers:
+  - url: http://localhost:9090/api
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      operationId: registerUser
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistrationRequest'
+      responses:
+        '201':
+          description: User registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRegistrationResponse'
+
+  /auth/token:
+    post:
+      tags:
+        - Auth
+      operationId: loginUser
+      summary: Authenticate user and get token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticationRequest'
+      responses:
+        '200':
+          description: Token response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+
+  /game/create:
+    post:
+      tags:
+        - Game
+      operationId: createGame
+      summary: Create a game session
+      responses:
+        '200':
+          description: Game created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameSession'
+
+  /game/{roomId}/join:
+    post:
+      tags:
+        - Game
+      operationId: joinGame
+      summary: Join a game session
+      parameters:
+        - name: roomId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Joined
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameSession'
+
+  /game/{roomId}/ready:
+    post:
+      tags:
+        - Game
+      operationId: toggleReady
+      summary: Toggle ready status
+      parameters:
+        - name: roomId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Toggled
+
+  /game/{roomId}/submit-word:
+    post:
+      tags:
+        - Game
+      operationId: submitWord
+      summary: Submit a word
+      parameters:
+        - name: roomId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Word submitted
+
+  /user/me:
+    get:
+      tags:
+        - User
+      operationId: getCurrentUser
+      summary: Get current user
+      responses:
+        '200':
+          description: User info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /user/update/user:
+    put:
+      tags:
+        - User
+      operationId: updateUser
+      summary: Update user data
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdateRequest'
+      responses:
+        '200':
+          description: Updated user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserUpdateResponse'
+
+  /user/delete/User:
+    delete:
+      tags:
+        - User
+      operationId: deleteUser
+      summary: Delete user
+      responses:
+        '204':
+          description: Deleted
+
+  /user/get/all:
+    get:
+      tags:
+        - User
+      operationId: getAllUsers
+      summary: Get all users
+      responses:
+        '200':
+          description: All users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+
+components:
+  schemas:
+    AuthenticationRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required: [username, password]
+
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        refresh_token:
+          type: string
+        expires_in:
+          type: integer
+          format: int64
+        refresh_expires_in:
+          type: integer
+          format: int64
+        token_type:
+          type: string
+
+    UserRegistrationRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+      required: [username, email, password]
+
+    UserRegistrationResponse:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        token:
+          $ref: '#/components/schemas/TokenResponse'
+
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        aboutMe:
+          type: string
+        gameWebSocketSessionId:
+          type: string
+
+    UserUpdateRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        aboutMe:
+          type: string
+
+    UserUpdateResponse:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        firstname:
+          type: string
+        lastname:
+          type: string
+        aboutMe:
+          type: string
+
+    GameSession:
+      type: object
+      properties:
+        roomId:
+          type: string
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        readyStatus:
+          type: object
+          additionalProperties:
+            type: boolean
+        submittedWords:
+          type: object
+          additionalProperties:
+            type: string
+        drawingOrder:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        currentDrawerIndex:
+          type: integer
+        phase:
+          $ref: '#/components/schemas/GamePhase'
+        currentWord:
+          type: string
+        currentDrawer:
+          $ref: '#/components/schemas/User'
+        timerSeconds:
+          type: integer
+
+    DrawingData:
+      type: object
+      required:
+        - roomId
+        - path
+        - senderSessionId
+      properties:
+        roomId:
+          type: string
+        path:
+          type: object
+          additionalProperties: true
+          description: Serialized Fabric.js path object
+        senderSessionId:
+          type: string
+
+    GamePhase:
+      type: string
+      enum:
+        - LOBBY
+        - WORD_SUBMISSION
+        - DRAWING
+        - RESULTS

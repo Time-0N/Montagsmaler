@@ -2,11 +2,12 @@ import {
   Component, ElementRef, OnInit, ViewChild, AfterViewInit
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { fabric } from 'fabric';
 import { WebSocketService } from '../../../service/web-socket.service';
-import { selectCurrentDrawer } from '../../../store/game-store/game-store.selectors';
 import { Store } from '@ngrx/store';
 import { User } from '../../../api/models/user';
-import {UserService} from '../../../api/services/user.service';
+import { UserService } from '../../../api/services/user.service';
+import { selectCurrentDrawer } from '../../../store/game-store/game-store.selectors';
 
 @Component({
   selector: 'app-drawing-component',
@@ -18,10 +19,10 @@ import {UserService} from '../../../api/services/user.service';
 export class DrawingComponentComponent implements OnInit, AfterViewInit {
   @ViewChild('canvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
 
-  private ctx!: CanvasRenderingContext2D;
-  private isDrawing = false;
+  private canvas!: fabric.Canvas;
   private roomId!: string;
   private user: User | null = null;
+  private canDraw = false;
 
   constructor(
     private wsService: WebSocketService,
@@ -36,59 +37,45 @@ export class DrawingComponentComponent implements OnInit, AfterViewInit {
       this.user = user;
 
       this.store.select(selectCurrentDrawer).subscribe(drawer => {
-        this.isDrawing = drawer?.id === this.user?.id;
+        this.canDraw = drawer?.id === this.user?.id;
+        if (this.canvas) {
+          this.canvas.isDrawingMode = this.canDraw;
+        }
       });
 
       this.wsService.drawingReceived$.subscribe(data => {
-        if (data.senderSessionId !== this.user?.id) {
-          this.drawFromRemote(data);
+        if (data.senderSessionId !== this.user?.id && data.path) {
+          fabric.util.enlivenObjects(
+            [data.path] as any[],
+            (objects: fabric.Object[]) => {
+              objects.forEach((obj: fabric.Object) => this.canvas.add(obj));
+              this.canvas.requestRenderAll();
+            },
+            ''
+          );
         }
-      })
+      });
     });
   }
 
   ngAfterViewInit(): void {
-    const canvas = this.canvasRef.nativeElement;
-    this.ctx = canvas.getContext('2d')!;
-    canvas.width = 800;
-    canvas.height = 600;
+    this.canvas = new fabric.Canvas(this.canvasRef.nativeElement, {
+      isDrawingMode: this.canDraw,
+    });
 
-    canvas.addEventListener('mousedown', this.startDraw);
-    canvas.addEventListener('mouseup', this.endDraw);
-    canvas.addEventListener('mousemove', this.draw);
-  }
+    this.canvas.setHeight(600);
+    this.canvas.setWidth(800);
+    this.canvas.freeDrawingBrush.width = 3;
+    this.canvas.freeDrawingBrush.color = 'black';
 
-  private startDraw = (event: MouseEvent) => {
-    if (!this.isDrawing) return;
-    this.ctx.beginPath();
-    this.ctx.moveTo(event.offsetX, event.offsetY);
-  };
-
-  private endDraw = () => {
-    if (!this.isDrawing) return;
-    this.ctx.closePath();
-  };
-
-  private draw = (event: MouseEvent) => {
-    if (!this.isDrawing) return;
-
-    this.ctx.lineTo(event.offsetX, event.offsetY);
-    this.ctx.stroke();
-
-    const drawingData = {
-      roomId: this.roomId,
-      x: event.offsetX,
-      y: event.offsetY,
-      senderSessionId: this.user?.id
-    };
-
-    this.wsService.sendDrawing(this.roomId, drawingData);
-  };
-
-  private drawFromRemote(data: { x: number; y: number }): void {
-    if (!this.ctx) return;
-
-    this.ctx.lineTo(data.x, data.y);
-    this.ctx.stroke();
+    this.canvas.on('path:created', (e: any) => {
+      const path = e.path;
+      const drawingData = {
+        roomId: this.roomId,
+        path: path.toObject(),
+        senderSessionId: this.user?.id
+      };
+      this.wsService.sendDrawing(this.roomId, drawingData);
+    });
   }
 }

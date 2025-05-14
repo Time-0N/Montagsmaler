@@ -1,0 +1,13 @@
+com/example/rest/generated/AuthApi.java
+com/example/rest/generated/GameApi.java
+com/example/rest/generated/UserApi.java
+com/example/rest/generated/model/AuthenticationRequest.java
+com/example/rest/generated/model/DrawingData.java
+com/example/rest/generated/model/GamePhase.java
+com/example/rest/generated/model/GameSession.java
+com/example/rest/generated/model/TokenResponse.java
+com/example/rest/generated/model/User.java
+com/example/rest/generated/model/UserRegistrationRequest.java
+com/example/rest/generated/model/UserRegistrationResponse.java
+com/example/rest/generated/model/UserUpdateRequest.java
+com/example/rest/generated/model/UserUpdateResponse.java

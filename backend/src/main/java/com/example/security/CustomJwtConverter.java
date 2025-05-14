@@ -1,7 +1,7 @@
 package com.example.security;
 
 import com.example.data.repository.UserRepository;
-import com.example.model.entity.User;
+import com.example.data.model.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;

@@ -1,11 +1,11 @@
 package com.example.rest.controller;
 
-import com.example.business.service.UserService;
+import com.example.rest.generated.model.UserUpdateRequest;
+import com.example.rest.generated.model.UserUpdateResponse;
+import com.example.service.UserService;
 import com.example.config.MockSecurityConfig;
 import com.example.config.TestWebConfig;
-import com.example.model.dto.user.UserUpdateRequest;
-import com.example.model.dto.user.UserUpdateResponse;
-import com.example.model.entity.User;
+import com.example.data.model.entity.User;
 import com.example.security.CustomJwtConverter;
 import com.example.security.UserCacheService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,8 +53,8 @@ class RestUserControllerTest {
 
     @Test
     void updateUser_ValidRequest_ReturnsUpdatedUser() throws Exception {
-        UserUpdateRequest request = new UserUpdateRequest("newusername", "new@example.com", "New", "User");
-        UserUpdateResponse response = new UserUpdateResponse("newusername", "new@example.com", "New", "User");
+        UserUpdateRequest request = new UserUpdateRequest("newusername", "new@example.com", "New", "User", "Test");
+        UserUpdateResponse response = new UserUpdateResponse("newusername", "new@example.com", "New", "User", "Test");
 
         Mockito.when(userService.updateUser(any(), any())).thenReturn(response);
 
@@ -63,18 +63,6 @@ class RestUserControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value("newusername"));
-    }
-
-    @Test
-    void patchUserAboutMe_ValidRequest_ReturnsUpdatedAboutMe() throws Exception {
-        String aboutMe = "New about me text";
-        Mockito.when(userService.patchUserAboutMe(any(), any())).thenReturn(aboutMe);
-
-        mockMvc.perform(patch("/api/user/patch/userAboutMe")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(aboutMe)))
-                .andExpect(status().isOk())
-                .andExpect(content().string(aboutMe));
     }
 
     @Test

@@ -42,6 +42,7 @@ export class GameLobbyComponent implements OnInit {
     });
   }
 
+
   toggleReady(): void {
     if (this.roomId) {
       this.store.dispatch(toggleReady({ roomId: this.roomId }));
