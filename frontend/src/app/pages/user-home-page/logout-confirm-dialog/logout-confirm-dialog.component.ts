@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {CommonModule} from '@angular/common';
 
@@ -15,14 +16,13 @@ import {CommonModule} from '@angular/common';
   styleUrls: ['./logout-confirm-dialog.component.scss']
 })
 export class LogoutConfirmDialogComponent {
-  @Output() confirmed = new EventEmitter<void>();
-  @Output() cancelled = new EventEmitter<void>();
+  constructor(private dialogRef: MatDialogRef<LogoutConfirmDialogComponent>) {}
 
-  confirm() {
-    this.confirmed.emit();
+  confirm(): void {
+    this.dialogRef.close('confirmed');
   }
 
-  cancel() {
-    this.cancelled.emit();
+  cancel(): void {
+    this.dialogRef.close('cancelled');
   }
 }

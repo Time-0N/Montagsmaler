@@ -1,12 +1,15 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {Component, EventEmitter, Inject, Output} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
-// Angular Material
-import { MatDialogModule } from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+
+export interface DialogData {
+  message: string;
+  confirmationWord: string;
+}
 
 @Component({
   selector: 'app-delete-confirm-dialog',
@@ -23,15 +26,17 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrls: ['./delete-confirm-dialog.component.scss']
 })
 export class DeleteConfirmDialogComponent {
-  input = '';
-  @Output() confirmed = new EventEmitter<void>();
-  @Output() cancelled = new EventEmitter<void>();
+  constructor(
+    private dialogRef: MatDialogRef<DeleteConfirmDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {}
+  input: string = '';
 
-  confirm() {
-    this.confirmed.emit();
+  confirm(): void {
+    this.dialogRef.close('confirmed');
   }
 
-  cancel() {
-    this.cancelled.emit();
+  cancel(): void {
+    this.dialogRef.close('cancelled');
   }
 }

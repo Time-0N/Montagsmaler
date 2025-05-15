@@ -1,6 +1,7 @@
 package com.example.service.impl;
 
 import com.example.rest.generated.model.*;
+import com.example.security.UserCacheService;
 import com.example.service.KeycloakService;
 import com.example.service.UserService;
 import com.example.data.repository.UserRepository;
@@ -20,9 +21,11 @@ import java.util.function.Consumer;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final KeycloakService keycloakService;
+    private final UserCacheService userCacheService;
 
 
     @Override
+    @Transactional
     public UserUpdateResponse updateUser(User user, UserUpdateRequest request) {
         if (StringUtils.hasText(request.getUsername()) &&
                 !request.getUsername().equals(user.getUsername()) &&
@@ -49,6 +52,7 @@ public class UserServiceImpl implements UserService {
         }
 
         userRepository.save(user);
+        userCacheService.invalidate(user.getKeycloakId());
 
         return new UserUpdateResponse(
                 user.getUsername(),
@@ -91,6 +95,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public User findById(UUID id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        return userOptional.orElse(null);
     }
 
     @Override

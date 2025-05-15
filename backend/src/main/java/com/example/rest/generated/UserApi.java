@@ -5,6 +5,7 @@
  */
 package com.example.rest.generated;
 
+import java.util.Map;
 import com.example.rest.generated.model.User;
 import com.example.rest.generated.model.UserUpdateRequest;
 import com.example.rest.generated.model.UserUpdateResponse;
@@ -34,13 +35,69 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-15T08:43:38.361533966+02:00[Europe/Zurich]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-16T01:03:39.342360425+02:00[Europe/Zurich]", comments = "Generator version: 7.7.0")
 @Validated
-@Tag(name = "User", description = "the User API")
+@Tag(name = "Admin", description = "the Admin API")
 public interface UserApi {
 
     /**
-     * DELETE /user/delete/User : Delete user
+     * DELETE /user/admin/delete-user/{userId}
+     *
+     * @param userId Unique identifier of the user to delete (required)
+     * @return User deleted successfully, no content returned (status code 204)
+     *         or User not found (status code 404)
+     *         or Forbidden - Admin access required (status code 403)
+     */
+    @Operation(
+        operationId = "adminDeleteUserById",
+        tags = { "Admin" },
+        responses = {
+            @ApiResponse(responseCode = "204", description = "User deleted successfully, no content returned"),
+            @ApiResponse(responseCode = "404", description = "User not found"),
+            @ApiResponse(responseCode = "403", description = "Forbidden - Admin access required")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.DELETE,
+        value = "/user/admin/delete-user/{userId}"
+    )
+    
+    ResponseEntity<Void> adminDeleteUserById(
+        @Parameter(name = "userId", description = "Unique identifier of the user to delete", required = true, in = ParameterIn.PATH) @PathVariable("userId") String userId
+    );
+
+
+    /**
+     * PUT /user/admin/update-user/{userId}
+     *
+     * @param userId Unique identifier for editing the user (required)
+     * @param userUpdateRequest  (required)
+     * @return Updated user (status code 200)
+     */
+    @Operation(
+        operationId = "adminUpdateUser",
+        tags = { "Admin" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Updated user", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = UserUpdateResponse.class))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.PUT,
+        value = "/user/admin/update-user/{userId}",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    
+    ResponseEntity<UserUpdateResponse> adminUpdateUser(
+        @Parameter(name = "userId", description = "Unique identifier for editing the user", required = true, in = ParameterIn.PATH) @PathVariable("userId") String userId,
+        @Parameter(name = "UserUpdateRequest", description = "", required = true) @Valid @RequestBody UserUpdateRequest userUpdateRequest
+    );
+
+
+    /**
+     * DELETE /user/delete/user : Delete user
      *
      * @return Deleted (status code 204)
      */
@@ -54,7 +111,7 @@ public interface UserApi {
     )
     @RequestMapping(
         method = RequestMethod.DELETE,
-        value = "/user/delete/User"
+        value = "/user/delete/user"
     )
     
     ResponseEntity<Void> deleteUser(
@@ -63,14 +120,14 @@ public interface UserApi {
 
 
     /**
-     * GET /user/get/all : Get all users
+     * GET /user/admin/get/all : Get all users
      *
      * @return All users (status code 200)
      */
     @Operation(
         operationId = "getAllUsers",
         summary = "Get all users",
-        tags = { "User" },
+        tags = { "Admin" },
         responses = {
             @ApiResponse(responseCode = "200", description = "All users", content = {
                 @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = User.class)))
@@ -79,11 +136,11 @@ public interface UserApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = "/user/get/all",
+        value = "/user/admin/get/all",
         produces = { "application/json" }
     )
     
-    ResponseEntity<List<User>> getAllUsers(
+    ResponseEntity<List<Map<String, User>>> getAllUsers(
         
     );
 

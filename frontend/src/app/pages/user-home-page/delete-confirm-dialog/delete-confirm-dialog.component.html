@@ -1,16 +1,18 @@
-<h2 mat-dialog-title>Delete Account</h2>
+<h2 mat-dialog-title>Confirm User Deletion</h2>
 
 <mat-dialog-content>
-  <p>Please type <strong>confirm</strong> to delete your account:</p>
+  <p>{{ data.message }} Type <strong>{{ data.confirmationWord }}</strong> to confirm:</p>
 
   <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Type 'confirm'</mat-label>
-    <input matInput [(ngModel)]="input" placeholder="confirm" />
+    <mat-label>Type '{{ data.confirmationWord }}'</mat-label>
+    <input matInput [(ngModel)]="input" [placeholder]="data.confirmationWord" />
   </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-raised-button color="warn" (click)="confirm()" [disabled]="input !== 'confirm'">
+  <button mat-raised-button color="warn"
+          (click)="confirm()"
+          [disabled]="input.toLowerCase() !== data.confirmationWord.toLowerCase()">
     Delete
   </button>
   <button mat-button (click)="cancel()">Cancel</button>

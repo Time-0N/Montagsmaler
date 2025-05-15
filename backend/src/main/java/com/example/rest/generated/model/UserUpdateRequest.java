@@ -19,7 +19,7 @@ import jakarta.annotation.Generated;
  */
 @lombok.Data @lombok.AllArgsConstructor @lombok.Builder
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-15T08:43:38.361533966+02:00[Europe/Zurich]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-16T01:03:39.342360425+02:00[Europe/Zurich]", comments = "Generator version: 7.7.0")
 public class UserUpdateRequest {
 
   private String username;

@@ -27,7 +27,7 @@ public class User {
     private String lastName;
     private String gameWebSocketSessionId;
 
-    @Lob
+    @Column(name = "about_me", columnDefinition = "TEXT")
     private String aboutMe;
 
     @Column(nullable = false)

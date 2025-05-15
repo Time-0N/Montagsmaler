@@ -32,7 +32,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-15T08:43:38.361533966+02:00[Europe/Zurich]", comments = "Generator version: 7.7.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-05-16T01:03:39.342360425+02:00[Europe/Zurich]", comments = "Generator version: 7.7.0")
 @Validated
 @Tag(name = "Game", description = "the Game API")
 public interface GameApi {
@@ -94,14 +94,14 @@ public interface GameApi {
      * POST /game/{roomId}/leave-game : Leave game
      *
      * @param roomId  (required)
-     * @return Left game (status code 200)
+     * @return Left game (status code 204)
      */
     @Operation(
         operationId = "leaveGame",
         summary = "Leave game",
         tags = { "Game" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "Left game")
+            @ApiResponse(responseCode = "204", description = "Left game")
         }
     )
     @RequestMapping(

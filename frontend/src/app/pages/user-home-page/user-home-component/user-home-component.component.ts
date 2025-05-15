@@ -27,8 +27,6 @@ import {MatButton} from '@angular/material/button';
     AsyncPipe,
     MatCardModule,
     UserEditFormComponent,
-    LogoutConfirmDialogComponent,
-    DeleteConfirmDialogComponent,
     CreateGameButtonComponent,
     JoinGameFormComponent,
     AdminUserListComponent,
@@ -83,6 +81,10 @@ export class UserHomeComponentComponent implements OnInit {
 
   openDeleteDialog(): void {
     const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
+      data: {
+        message: 'Are you sure you want to delete your account?',
+        confirmationWord: 'confirm'
+      },
       width: '350px',
       backdropClass: 'custom-dialog-backdrop',
       panelClass: 'custom-dialog-panel'

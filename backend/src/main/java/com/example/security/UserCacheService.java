@@ -11,9 +11,13 @@ import java.util.function.Supplier;
 @Service
 public class UserCacheService {
     private final Cache<String, User> cache = Caffeine.newBuilder()
-            .expireAfterWrite(30, TimeUnit.MINUTES)
+            .expireAfterWrite(5, TimeUnit.MINUTES)
             .maximumSize(1000)
             .build();
+
+    public void invalidate(String keycloakId) {
+        cache.invalidate(keycloakId);
+    }
 
     public User getOrLoad(String keycloakId, Supplier<User> loader) {
         return cache.get(keycloakId, k -> loader.get());
