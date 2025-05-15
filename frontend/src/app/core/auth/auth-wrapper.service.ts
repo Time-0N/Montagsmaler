@@ -33,6 +33,27 @@ export class AuthWrapperService {
     }
   }
 
+  getDecodedToken(): any | null {
+    const token = this.getAccessToken();
+    if (!token) return null;
+    try {
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch {
+      return null;
+    }
+  }
+
+  hasAnyRole(rolesToCheck: string[]): boolean {
+    const decoded = this.getDecodedToken();
+    if (!decoded) return false;
+
+    const keycloakClientId = 'dev';
+    const userRoles = decoded.resource_access?.[keycloakClientId]?.roles || [];
+
+    return rolesToCheck.some(role => userRoles.includes(role));
+  }
+
+
   logout(): void {
     localStorage.clear();
     this.router.navigate(['/']);

@@ -15,21 +15,23 @@ import {LogoutConfirmDialogComponent} from '../logout-confirm-dialog/logout-conf
 import {DeleteConfirmDialogComponent} from '../delete-confirm-dialog/delete-confirm-dialog.component';
 import {CreateGameButtonComponent} from '../create-game-button/create-game-button.component';
 import {JoinGameFormComponent} from '../join-game-form/join-game-form.component';
+import {AdminUserListComponent} from '../admin-user-list/admin-user-list.component';
 
 
 @Component({
   selector: 'app-user-home-component',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf, AsyncPipe, UserEditFormComponent, LogoutConfirmDialogComponent, DeleteConfirmDialogComponent, CreateGameButtonComponent, JoinGameFormComponent],
+  imports: [ReactiveFormsModule, NgIf, AsyncPipe, UserEditFormComponent, LogoutConfirmDialogComponent, DeleteConfirmDialogComponent, CreateGameButtonComponent, JoinGameFormComponent, AdminUserListComponent],
   templateUrl: './user-home-component.component.html',
   styleUrls: ['./user-home-component.component.scss']
 })
-export class UserHomeComponentComponent {
+export class UserHomeComponentComponent implements OnInit {
   user$!: Observable<User | null>;
   loading$!: Observable<boolean>;
   editMode = false;
   showLogoutDialog = false;
   showDeleteDialog = false;
+  public isAdmin = false;
 
   constructor(
     private store: Store,
@@ -38,6 +40,10 @@ export class UserHomeComponentComponent {
   ) {
     this.user$ = this.store.select(selectUser);
     this.loading$ = this.store.select(selectUserLoading);
+  }
+
+  ngOnInit(): void {
+    this.isAdmin = this.authWrapper.hasAnyRole(['ADMIN']);
   }
 
   toggleEdit(): void {

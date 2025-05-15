@@ -14,6 +14,7 @@ export class WebSocketService {
   public drawingReceived$ = new Subject<any>();
   private chatSubject = new Subject<any>()
   public chatReceived$ = this.chatSubject.asObservable();
+  private subscriptions: Array<ReturnType<Client['subscribe']>> = [];
 
   constructor(private store: Store) {
     this.stompClient = new Client({
@@ -27,33 +28,42 @@ export class WebSocketService {
     this.stompClient.onConnect = () => {
       console.log('Connected to WebSocket');
 
-      this.stompClient.subscribe(`/topic/game/${roomId}/state`, (message: IMessage) => {
-        const session: GameSession = JSON.parse(message.body);
-        this.store.dispatch(GameActions.updateFromSocket({ session }));
-      });
+      this.subscriptions.push(
+        this.stompClient.subscribe(`/topic/game/${roomId}/state`, (message: IMessage) => {
+          const session: GameSession = JSON.parse(message.body);
+          this.store.dispatch(GameActions.updateFromSocket({ session }));
+        }),
 
-      this.stompClient.subscribe(`/topic/game/${roomId}/chat`, msg => {
-        const chatMsg = JSON.parse(msg.body);
-        this.chatSubject = JSON.parse(msg.body);
-        console.log('Chat:', chatMsg);
-      });
+        this.stompClient.subscribe(`/topic/game/${roomId}/chat`, msg => {
+          const chatMsg = JSON.parse(msg.body);
+          this.chatSubject.next(chatMsg); // ✅ Fix here too
+          console.log('Chat:', chatMsg);
+        }),
 
-      this.stompClient.subscribe(`/topic/game/${roomId}/draw`, msg => {
-        const drawingData = JSON.parse(msg.body);
-        console.log('Drawing data:', drawingData);
-      });
+        this.stompClient.subscribe(`/topic/game/${roomId}/draw`, msg => {
+          const drawingData = JSON.parse(msg.body);
+          this.drawingReceived$.next(drawingData);
+          console.log('Drawing data:', drawingData);
+        }),
 
-      this.stompClient.subscribe('/user/queue/notifications', msg => {
-        const notif = JSON.parse(msg.body);
-        console.log('Notification:', notif);
-      });
+        this.stompClient.subscribe('/user/queue/notifications', msg => {
+          const notif = JSON.parse(msg.body);
+          console.log('Notification:', notif);
+        })
+      );
     };
-
-    this.stompClient.activate();
   }
 
   public disconnect(): void {
-    this.stompClient.deactivate();
+    for (const sub of this.subscriptions) {
+      sub.unsubscribe();
+    }
+    this.subscriptions = [];
+
+    if (this.stompClient.connected) {
+      this.stompClient.deactivate();
+      console.log('WebSocket disconnected');
+    }
   }
 
   public sendGuess(roomId: string, guess: string): void {
