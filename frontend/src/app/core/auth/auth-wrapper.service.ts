@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../api/services/auth.service';
-import { TokenResponse } from '../api/model/tokenResponse';
+import { AuthService } from '../../generated/api/auth.service';
+import { TokenResponse } from '../../generated/model/tokenResponse';
 
 @Injectable({ providedIn: 'root' })
 export class AuthWrapperService {

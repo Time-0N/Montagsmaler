@@ -8,15 +8,15 @@ plugins {
 val generateFrontendApi by tasks.registering(org.openapitools.generator.gradle.plugin.tasks.GenerateTask::class) {
   inputSpec.set("$rootDir/docs/openapi/openapi.yaml")
   generatorName.set("typescript-angular")
-  outputDir.set("$rootDir/frontend/src/app/api")
+  outputDir.set("$rootDir/frontend/src/app/generated")
 
   configOptions.set(
     mapOf(
       "ngVersion" to "16.0.0",
       "providedInRoot" to "true",
-      "useTags" to "true",
+      "useTags" to "false",
       "modelPackage" to "models",
-      "apiPackage" to "services",
+      "apiPackage" to "service",
       "apiModulePrefix" to ""
     )
   )
@@ -24,7 +24,8 @@ val generateFrontendApi by tasks.registering(org.openapitools.generator.gradle.p
   globalProperties.set(
     mapOf(
       "models" to "",
-      "apis" to ""
+      "apis" to "",
+      "supportingFiles" to ""
     )
   )
 }

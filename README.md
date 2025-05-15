@@ -18,6 +18,46 @@ These scripts will automatically start and initialize the services.
 
 ---
 
+# 🧬 OpenAPI Code Generation
+
+The Montagsmaler project uses [OpenAPI Generator](https://openapi-generator.tech/) to automatically generate API client and server code from a shared OpenAPI specification file.
+
+## 🧪 Backend Code Generation (Spring Boot)
+
+Generates Java interfaces and models for the REST API on the backend.
+
+```bash
+./gradlew backend:openApiGenerate
+```
+
+- 📄 Uses: `docs/openapi/openapi.yaml`
+- 📁 Outputs to: `backend/src/main/java/com/example/rest/generated`
+
+---
+
+## 🧩 Frontend Code Generation (Angular)
+
+Generates TypeScript services and models to communicate with the backend API.
+
+```bash
+./gradlew frontend:generateFrontendApi
+```
+
+- 📄 Uses: `docs/openapi/openapi.yaml`
+- 📁 Outputs to: `frontend/src/app/api`
+
+---
+
+✅ Run both generation tasks at once with:
+
+```bash
+./gradlew backend:openApiGenerate frontend:generateFrontendApi
+```
+
+> This keeps backend and frontend code in sync with the OpenAPI spec.
+
+---
+
 ## 🔐 Import the Keycloak Realm
 
 1. Open your browser and go to: [http://localhost:8080](http://localhost:8080)

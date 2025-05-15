@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../../api/services/auth.service';
+import { AuthService } from '../../../generated/api/auth.service';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
-import { AuthWrapperService } from '../../../service/auth-wrapper.service';
-import { AuthenticationRequest } from '../../../api/model/authenticationRequest';
-import { UserRegistrationRequest } from '../../../api/model/userRegistrationRequest';
-import { TokenResponse } from '../../../api/model/tokenResponse';
+import { AuthWrapperService } from '../../../core/auth/auth-wrapper.service';
+import { AuthenticationRequest } from '../../../generated/model/authenticationRequest';
+import { UserRegistrationRequest } from '../../../generated/model/userRegistrationRequest';
+import { TokenResponse } from '../../../generated/model/tokenResponse';
 
 
 @Component({
@@ -97,7 +97,7 @@ export class HomePageComponentComponent implements OnInit {
     this.authService.registerUser(registrationRequest)
       .subscribe({
         next: (response) => {
-          if (response.token?.access_token) {
+          if (response.token?.accessToken) {
             this.handleAuthentication(response.token);
             this.router.navigate(['/user-home']);
           }

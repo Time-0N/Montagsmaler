@@ -3,15 +3,15 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import {provideHttpClient, withInterceptors} from '@angular/common/http';
-import {authInterceptor} from './core/interceptors/auth.interceptor';
-import {BASE_PATH} from './api';
+import {authInterceptor} from '../interceptors/auth.interceptor';
+import {BASE_PATH} from '../../generated';
 import {provideState, provideStore} from '@ngrx/store';
 import {provideEffects} from '@ngrx/effects';
-import {UserStoreEffects} from './store/user-store/user-store.effects';
-import {userFeatureName, userReducer} from './store/user-store/user-store.reducer';
+import {UserStoreEffects} from '../../store/user-store/user-store.effects';
+import {userFeatureName, userReducer} from '../../store/user-store/user-store.reducer';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import {GameStoreEffects} from './store/game-store/game-store.effects';
-import {gameFeatureKey, gameReducer} from './store/game-store/game-store.reducer';
+import {GameStoreEffects} from '../../store/game-store/game-store.effects';
+import {gameFeatureKey, gameReducer} from '../../store/game-store/game-store.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [

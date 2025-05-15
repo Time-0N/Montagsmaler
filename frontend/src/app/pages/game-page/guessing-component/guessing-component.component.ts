@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { WebSocketService } from '../../../service/web-socket.service';
 import { selectCurrentDrawer } from '../../../store/game-store/game-store.selectors';
-import { User } from '../../../api/model/user';
-import { UserService } from '../../../api/services/user.service';
+import { User } from '../../../generated/model/user';
+import { UserService } from '../../../generated/api/user.service';
 
 @Component({
   selector: 'app-guessing-component',

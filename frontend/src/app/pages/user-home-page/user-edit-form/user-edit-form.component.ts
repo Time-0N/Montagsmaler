@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { User } from '../../../api/model/user';
-import { UserUpdateRequest } from '../../../api/model/userUpdateRequest';
+import { User } from '../../../generated/model/user';
+import { UserUpdateRequest } from '../../../generated/model/userUpdateRequest';
 
 @Component({
   selector: 'app-user-edit-form',

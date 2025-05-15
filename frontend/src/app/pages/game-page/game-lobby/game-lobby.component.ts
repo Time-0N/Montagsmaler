@@ -3,15 +3,16 @@ import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { selectCurrentSession } from '../../../store/game-store/game-store.selectors';
 import { toggleReady } from '../../../store/game-store/game-store.actions';
-import { User } from '../../../api/model/user';
-import { UserService } from '../../../api/services/user.service';
+import { User } from '../../../generated/model/user';
+import { UserService } from '../../../generated/api/user.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import {LeaveGameButtonComponent} from '../leave-game-button/leave-game-button.component';
 
 @Component({
   selector: 'app-game-lobby',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LeaveGameButtonComponent],
   templateUrl: './game-lobby.component.html',
   styleUrls: ['./game-lobby.component.scss']
 })

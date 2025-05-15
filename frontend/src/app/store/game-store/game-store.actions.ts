@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { GameSession } from '../../api/model/gameSession'
+import { GameSession } from '../../generated/model/gameSession'
 
 const actionName = '[Game]';
 
@@ -41,6 +41,18 @@ export const toggleReadyFailure = createAction(
   `${actionName} Toggle Ready Failure`,
   props<{ error: string }>());
 
+export const leaveGame = createAction(
+  `${actionName} Leave Game`,
+  props<{ roomId: string }>()
+)
+
+export const leaveGameSuccess = createAction(
+  `${actionName} Leave Game Success`);
+
+export const leaveGameFailure = createAction(
+  `${actionName} Leave Game Failure`,
+  props<{ error: string }>()
+)
 
 export const submitWord = createAction(
   `${actionName} Submit Word`,

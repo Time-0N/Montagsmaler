@@ -1,4 +1,4 @@
-import {GameSession} from '../../api/model/gameSession';
+import {GameSession} from '../../generated/model/gameSession';
 
 export interface GameState {
   currentSession: GameSession | null;

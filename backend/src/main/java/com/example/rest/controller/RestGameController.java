@@ -33,11 +33,19 @@ public class RestGameController implements GameApi {
     }
 
     @Override
+    @PostMapping("/{roomId}/leave-game")
+    public ResponseEntity<Void> leaveGame(@PathVariable String roomId) {
+        com.example.data.model.entity.User currentUser = currentUserProvider.getCurrentUser();
+        gameService.leaveGame(currentUser, roomId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Override
     @PostMapping("/{roomId}/submit-word")
     public ResponseEntity<Void> submitWord(@PathVariable String roomId, @RequestBody String word) {
         com.example.data.model.entity.User currentUser = currentUserProvider.getCurrentUser();
         gameService.submitWord(currentUser, word, roomId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @Override

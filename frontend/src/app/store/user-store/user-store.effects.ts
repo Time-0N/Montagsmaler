@@ -1,10 +1,10 @@
 import {inject, Injectable} from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { UserService } from '../../api/services/user.service';
+import { UserService } from '../../generated/api/user.service';
 import * as UserActions from './user-store.actions';
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { Router } from '@angular/router';
-import { AuthWrapperService } from '../../service/auth-wrapper.service';
+import { AuthWrapperService } from '../../core/auth/auth-wrapper.service';
 import {userDataResolverExecuted} from './user-store.actions';
 
 @Injectable()

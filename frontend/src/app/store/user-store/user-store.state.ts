@@ -1,4 +1,4 @@
-import { User } from '../../api/model/user';
+import { User } from '../../generated/model/user';
 
 export interface UserState {
   readonly user: User | null,

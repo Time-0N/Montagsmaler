@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { GameService } from '../../api/services/game.service';
+import { GameService } from '../../generated/api/game.service';
 import * as GameActions from './game-store.actions';
 import {catchError, map, mergeMap, of, tap} from 'rxjs';
 import { Router } from '@angular/router';
@@ -61,6 +61,21 @@ export class GameStoreEffects {
       )
     )
   );
+
+  leaveGame$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GameActions.leaveGame),
+      mergeMap(({ roomId }) =>
+        this.gameService.leaveGame(roomId).pipe(
+          tap(() => {
+            this.router.navigate(['/user-home'])
+          }),
+          map(() => GameActions.leaveGameSuccess()),
+          catchError(error => of(GameActions.leaveGameFailure({ error })))
+        )
+      )
+    )
+  )
 
   submitWord$ = createEffect(() =>
     this.actions$.pipe(

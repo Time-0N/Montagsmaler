@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Client, IMessage, Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { Store } from '@ngrx/store';
-import { GameSession } from '../api/model/gameSession';
+import { GameSession } from '../generated/model/gameSession';
 import * as GameActions from '../store/game-store/game-store.actions';
 import { Subject } from 'rxjs';
 

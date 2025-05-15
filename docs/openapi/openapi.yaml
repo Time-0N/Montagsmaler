@@ -117,6 +117,22 @@ paths:
         '200':
           description: Word submitted
 
+  /game/{roomId}/leave-game:
+    post:
+      tags:
+        - Game
+      operationId: leaveGame
+      summary: Leave game
+      parameters:
+        - name: roomId
+          required: true
+          schema:
+            type: string
+          in: path
+      responses:
+        '204':
+          description: Left game
+
   /user/me:
     get:
       tags:
