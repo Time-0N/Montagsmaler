@@ -1,0 +1,75 @@
+$primary: #5c6bc0;
+$accent: #81d4fa;
+
+.auth-card {
+  max-width: 400px;
+  margin: 3rem auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: #33373a;
+  color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+
+::ng-deep .mat-button-toggle-group {
+  display: flex;
+  width: 100%;
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  background-color: #2c2c2c;
+}
+
+::ng-deep .mat-button-toggle {
+  flex: 1 1 50%;
+  text-align: center;
+  border: none;
+  color: #fff;
+}
+
+::ng-deep .mat-button-toggle-checked {
+  background-color: $accent !important;
+  color: #000 !important;
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: #2e2e2e;
+}
+
+::ng-deep .mat-input-element {
+  color: #ffffff;
+  caret-color: #ffffff;
+}
+
+::ng-deep .mat-form-field-label {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+  color: $accent !important;
+}
+
+::ng-deep .mat-form-field-underline,
+::ng-deep .mat-form-field-ripple {
+  background-color: $accent !important;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.error {
+  color: #ef5350;
+  margin-top: 1rem;
+}

@@ -1,10 +1,10 @@
-<div class="dialog-backdrop">
-  <div class="dialog-box">
-    <h2>Logout</h2>
-    <p>You are about to logout.</p>
-    <div class="dialog-actions">
-      <button class="confirm" (click)="confirm()">Logout</button>
-      <button class="cancel" (click)="cancel()">Cancel</button>
-    </div>
-  </div>
-</div>
+<h2 mat-dialog-title>Logout</h2>
+
+<mat-dialog-content>
+  <p>You are about to logout. Are you sure?</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button color="warn" (click)="confirm()">Logout</button>
+  <button mat-button (click)="cancel()">Cancel</button>
+</mat-dialog-actions>

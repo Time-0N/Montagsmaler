@@ -1,4 +1,41 @@
-/* You can add global styles to this file, and also import other style files */
+$primary: #5c6bc0;
+$accent: #81d4fa;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* -------------------------------
+   Material Button Base Styling
+-------------------------------- */
+button.mat-raised-button,
+button.mat-stroked-button,
+button.mat-flat-button {
+  border-radius: 24px;
+  font-weight: 500;
+  padding: 8px 20px;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Accent Primary Button */
+button[color="primary"] {
+  background-color: $accent !important;
+  color: #000 !important;
+
+  &:hover {
+    background-color: lighten($accent, 5%) !important;
+  }
+
+  &:disabled {
+    background-color: darken($accent, 20%) !important;
+    color: #777 !important;
+  }
+}
+
+/* Danger Button */
+button[color="warn"] {
+  background-color: #ef5350 !important;
+  color: white !important;
+
+  &:hover {
+    background-color: darken(#ef5350, 10%) !important;
+  }
+}

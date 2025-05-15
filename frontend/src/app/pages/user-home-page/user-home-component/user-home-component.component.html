@@ -1,42 +1,55 @@
 <div *ngIf="user$ | async as user">
-  <div *ngIf="!editMode">
-    <p><strong>Username:</strong> {{ user.username }}</p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    <p><strong>First Name:</strong> {{ user.firstName }}</p>
-    <p><strong>Last Name:</strong> {{ user.lastName }}</p>
-    <p><strong>About Me:</strong> {{ user.aboutMe }}</p>
-    <button (click)="toggleEdit()">Edit</button>
-  </div>
 
-  <app-user-edit-form
-    *ngIf="editMode"
-    [user]="user"
-    (submitForm)="handleUpdate($event)"
-    (cancelEdit)="toggleEdit()"
-  />
+  <!-- User Profile View -->
+  <mat-card *ngIf="!editMode">
+    <mat-card-title>User Profile</mat-card-title>
+    <mat-card-content>
+      <p><strong>Username:</strong> {{ user.username }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>First Name:</strong> {{ user.firstName }}</p>
+      <p><strong>Last Name:</strong> {{ user.lastName }}</p>
+      <p><strong>About Me:</strong> {{ user.aboutMe }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="toggleEdit()">Edit</button>
+    </mat-card-actions>
+  </mat-card>
 
-  <button (click)="openLogoutDialog()">Logout</button>
-  <button (click)="openDeleteDialog()">Delete Account</button>
+  <!-- User Edit Form -->
+  <mat-card *ngIf="editMode">
+    <mat-card-title>Edit Profile</mat-card-title>
+    <mat-card-content>
+      <app-user-edit-form
+        [user]="user"
+        (submitForm)="handleUpdate($event)"
+        (cancelEdit)="toggleEdit()" />
+    </mat-card-content>
+  </mat-card>
 
-  <app-logout-confirm-dialog
-    *ngIf="showLogoutDialog"
-    (confirmed)="onLogoutConfirmed(); showLogoutDialog = false"
-    (cancelled)="showLogoutDialog = false"
-  />
+  <!-- Account Section -->
+  <mat-card>
+    <mat-card-title>Account</mat-card-title>
+    <mat-card-actions>
+      <button mat-raised-button color="warn" (click)="openLogoutDialog()">Logout</button>
+      <button mat-raised-button color="warn" (click)="openDeleteDialog()">Delete Account</button>
+    </mat-card-actions>
+  </mat-card>
 
-  <app-delete-confirm-dialog
-    *ngIf="showDeleteDialog"
-    (confirmed)="onDeleteConfirmed(); showDeleteDialog = false"
-    (cancelled)="showDeleteDialog = false"
-  />
+  <!-- Game Actions -->
+  <mat-card class="user-home-actions">
+    <mat-card-title>Game Actions</mat-card-title>
+    <mat-card-content>
+      <app-create-game-button></app-create-game-button>
+      <app-join-game-form></app-join-game-form>
+    </mat-card-content>
+  </mat-card>
 
-  <div class="user-home-actions">
-    <app-create-game-button></app-create-game-button>
+  <!-- Admin Panel -->
+  <mat-card *ngIf="isAdmin" class="user-home-admin">
+    <mat-card-title>Admin Panel</mat-card-title>
+    <mat-card-content>
+      <app-admin-user-list></app-admin-user-list>
+    </mat-card-content>
+  </mat-card>
 
-    <app-join-game-form></app-join-game-form>
-  </div>
-
-  <div class="user-home-admin">
-    <app-admin-user-list *ngIf="isAdmin"></app-admin-user-list>
-  </div>
 </div>

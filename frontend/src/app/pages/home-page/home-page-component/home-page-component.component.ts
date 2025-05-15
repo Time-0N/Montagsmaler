@@ -7,6 +7,13 @@ import { AuthWrapperService } from '../../../core/auth/auth-wrapper.service';
 import { AuthenticationRequest } from '../../../generated/model/authenticationRequest';
 import { UserRegistrationRequest } from '../../../generated/model/userRegistrationRequest';
 import { TokenResponse } from '../../../generated/model/tokenResponse';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
+
 
 
 @Component({
@@ -14,7 +21,13 @@ import { TokenResponse } from '../../../generated/model/tokenResponse';
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    NgIf
+    NgIf,
+    MatCardModule,
+    MatButtonToggleModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    MatButtonModule
   ],
   templateUrl: './home-page-component.component.html',
   styleUrls: ['./home-page-component.component.scss']
@@ -123,5 +136,9 @@ export class HomePageComponentComponent implements OnInit {
       err.error?.message ||
       defaultMessage;
     this.isLoading = false;
+  }
+
+  get form(): FormGroup {
+    return this.isLoginMode ? this.loginForm : this.registerForm;
   }
 }

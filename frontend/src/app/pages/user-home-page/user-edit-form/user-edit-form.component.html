@@ -1,37 +1,39 @@
-<form [formGroup]="profileForm" (ngSubmit)="onSave()" class="form-container">
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Username</mat-label>
-    <input matInput formControlName="username" />
-    <mat-error *ngIf="profileForm.get('username')!.hasError('required')">
-      Username is required
-    </mat-error>
-  </mat-form-field>
+<form [formGroup]="profileForm" (ngSubmit)="onSave()" class="edit-form">
+  <div class="form-grid">
+    <mat-form-field appearance="outline">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" />
+      <mat-error *ngIf="profileForm.get('username')!.hasError('required')">
+        Username is required
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Email</mat-label>
-    <input matInput type="email" formControlName="email" />
-    <mat-error *ngIf="profileForm.get('email')!.hasError('required')">
-      Email is required
-    </mat-error>
-    <mat-error *ngIf="profileForm.get('email')!.hasError('email')">
-      Enter a valid email
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" />
+      <mat-error *ngIf="profileForm.get('email')!.hasError('required')">
+        Email is required
+      </mat-error>
+      <mat-error *ngIf="profileForm.get('email')!.hasError('email')">
+        Enter a valid email
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>First Name</mat-label>
-    <input matInput formControlName="firstName" />
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="firstName" />
+    </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Last Name</mat-label>
-    <input matInput formControlName="lastName" />
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="lastName" />
+    </mat-form-field>
 
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>About Me</mat-label>
-    <textarea matInput formControlName="aboutMe" rows="4"></textarea>
-  </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>About Me</mat-label>
+      <textarea matInput formControlName="aboutMe" rows="3"></textarea>
+    </mat-form-field>
+  </div>
 
   <div class="actions">
     <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid">

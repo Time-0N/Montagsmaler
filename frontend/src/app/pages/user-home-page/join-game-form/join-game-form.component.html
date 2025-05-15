@@ -1,10 +1,9 @@
-<form (ngSubmit)="join()" class="join-form">
-  <input
-    type="text"
-    [(ngModel)]="roomId"
-    name="roomId"
-    placeholder="Enter Room ID"
-    required
-  />
-  <button type="submit">Join Game</button>
-</form>
+<button
+  mat-raised-button
+  color="primary"
+  type="submit"
+  [disabled]="!roomId.trim()"
+  class="button-primary"
+>
+  Join Game
+</button>

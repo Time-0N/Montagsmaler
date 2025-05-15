@@ -1,11 +1,17 @@
-<div class="dialog-backdrop">
-  <div class="dialog-box">
-    <h2>Delete Account</h2>
-    <p>Please type <strong>confirm</strong> to delete your account:</p>
-    <input [(ngModel)]="input" placeholder="Type 'confirm'" />
-    <div class="dialog-actions">
-      <button class="confirm" [disabled]="input !== 'confirm'" (click)="confirm()">Delete</button>
-      <button class="cancel" (click)="cancel()">Cancel</button>
-    </div>
-  </div>
-</div>
+<h2 mat-dialog-title>Delete Account</h2>
+
+<mat-dialog-content>
+  <p>Please type <strong>confirm</strong> to delete your account:</p>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Type 'confirm'</mat-label>
+    <input matInput [(ngModel)]="input" placeholder="confirm" />
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="warn" (click)="confirm()" [disabled]="input !== 'confirm'">
+    Delete
+  </button>
+  <button mat-button (click)="cancel()">Cancel</button>
+</mat-dialog-actions>
