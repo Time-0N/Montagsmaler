@@ -68,7 +68,7 @@ Generates TypeScript services and models to communicate with the backend API.
 If you want the **username to be editable** by users, you must enable this feature in Keycloak:
 
 - Go to your Realm in the Keycloak Admin Console
-- Navigate to **Realm Settings** → **User Info** tab
+- Navigate to **Realm Settings** → **Login** tab
 - Enable the toggle for **Edit username**
 
 If this option is **not enabled**, users will **not be able to change their usernames** via the Keycloak UI or API.
