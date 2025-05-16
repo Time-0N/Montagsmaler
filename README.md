@@ -8,10 +8,8 @@ This guide will help you set up the development environment for the **Montagsmal
 
 Use the two `.sh` scripts located in `Montagsmaler/devRessources`:
 
-```bash
-./start-postgres.sh
+./start-postgres.sh  
 ./start-keycloak.sh
-```
 
 These scripts will automatically start and initialize the services.
 > ⚠️ **Requirement:** Docker must be installed on your machine.
@@ -26,9 +24,7 @@ The Montagsmaler project uses [OpenAPI Generator](https://openapi-generator.tech
 
 Generates Java interfaces and models for the REST API on the backend.
 
-```bash
 ./gradlew backend:openApiGenerate
-```
 
 - 📄 Uses: `docs/openapi/openapi.yaml`
 - 📁 Outputs to: `backend/src/main/java/com/example/rest/generated`
@@ -39,9 +35,7 @@ Generates Java interfaces and models for the REST API on the backend.
 
 Generates TypeScript services and models to communicate with the backend API.
 
-```bash
 ./gradlew frontend:generateFrontendApi
-```
 
 - 📄 Uses: `docs/openapi/openapi.yaml`
 - 📁 Outputs to: `frontend/src/app/api`
@@ -50,9 +44,7 @@ Generates TypeScript services and models to communicate with the backend API.
 
 ✅ Run both generation tasks at once with:
 
-```bash
 ./gradlew backend:openApiGenerate frontend:generateFrontendApi
-```
 
 > This keeps backend and frontend code in sync with the OpenAPI spec.
 
@@ -68,6 +60,18 @@ Generates TypeScript services and models to communicate with the backend API.
    - Click **Create Realm**
    - Choose **Import Realm**
    - Select the file: `dev-realm.json` (located in `Montagsmaler/devRessources`)
+
+---
+
+### ⚠️ Important: Enable Username Editing in Keycloak
+
+If you want the **username to be editable** by users, you must enable this feature in Keycloak:
+
+- Go to your Realm in the Keycloak Admin Console
+- Navigate to **Realm Settings** → **User Info** tab
+- Enable the toggle for **Edit username**
+
+If this option is **not enabled**, users will **not be able to change their usernames** via the Keycloak UI or API.
 
 ---
 
@@ -118,9 +122,7 @@ Without this role:
 
 To launch the backend using the development profile, run the following command from the root of the project:
 
-```bash
 ./gradlew bootRun --args='--spring.profiles.active=dev'
-```
 
 This will start the application with the correct configuration for the dev environment.
 
@@ -143,15 +145,13 @@ API documentation is available at:
 **Method:** `POST`  
 **Expected JSON Body:**
 
-```json
 {
-  "username": "string",
-  "email": "email@example.com",
-  "password": "string",
-  "firstName": "string",
-  "lastName": "string"
+"username": "string",
+"email": "email@example.com",
+"password": "string",
+"firstName": "string",
+"lastName": "string"
 }
-```
 
 ---
 
@@ -161,18 +161,14 @@ API documentation is available at:
 **Method:** `POST`  
 **Expected JSON Body:**
 
-```json
 {
-  "username": "string",
-  "password": "string"
+"username": "string",
+"password": "string"
 }
-```
 
 Both endpoints return a **JWT Bearer Token** that must be included in authenticated requests using the `Authorization` header:
 
-```
 Authorization: Bearer <your_token_here>
-```
 
 ---
 
@@ -195,15 +191,15 @@ Authorization: Bearer <your_token_here>
 ### 🧍 User Entity (Simplified Structure)
 
 | Field                  | Type     | Constraints                    | Description                            |
-|------------------------|----------|--------------------------------|----------------------------------------|
-| `id`                   | UUID     | Primary Key (auto-generated)   | Unique identifier                      |
-| `username`             | String   | Unique, Not Null               | Chosen username                        |
-| `email`                | String   | Unique, Not Null               | User's email                           |
-| `firstName`            | String   | —                              | First name                             |
-| `lastName`             | String   | —                              | Last name                              |
-| `gameWebSocketSessionId` | String | —                              | WebSocket session ID for in-game use   |
-| `aboutMe`              | String   | Large Object (Lob)             | User bio or description                |
-| `keycloakId`           | String   | Not Null                       | Link to Keycloak user                  |
+|------------------------|----------|-------------------------------|--------------------------------------|
+| `id`                   | UUID     | Primary Key (auto-generated)  | Unique identifier                    |
+| `username`             | String   | Unique, Not Null              | Chosen username                      |
+| `email`                | String   | Unique, Not Null              | User's email                        |
+| `firstName`            | String   | —                             | First name                          |
+| `lastName`             | String   | —                             | Last name                          |
+| `gameWebSocketSessionId` | String | —                             | WebSocket session ID for in-game use |
+| `aboutMe`              | String   | Large Object (Lob)            | User bio or description             |
+| `keycloakId`           | String   | Not Null                      | Link to Keycloak user               |
 
 > ℹ️ The entity is annotated with `@Entity` and mapped to the table `users`. UUIDs are used as the primary key and generated via `@UuidGenerator`.
 
@@ -211,17 +207,17 @@ Authorization: Bearer <your_token_here>
 
 ### 🎮 GameSession (In-Memory DAO)
 
-| Field             | Type                             | Description                                           |
-|------------------|----------------------------------|-------------------------------------------------------|
-| `roomId`          | String                           | Unique ID representing the game room                 |
-| `users`           | List\<User\>                     | List of users in the session                         |
-| `readyStatus`     | Map\<UUID, Boolean\>             | Mapping of user IDs to their ready state             |
-| `submittedWords`  | Map\<UUID, String\>              | Words submitted by users (UUID → word)               |
-| `drawingOrder`    | List\<User\>                     | Order in which users will draw                       |
-| `currentDrawerIndex` | int                          | Index of the current drawer in the drawing order     |
-| `phase`           | GamePhase                        | Current game phase (e.g. LOBBY, DRAWING, etc.)       |
-| `currentWord`     | String                           | Word currently being drawn                           |
-| `currentDrawer`   | User                             | The user currently drawing                           |
-| `timerSeconds`    | int                              | Remaining time for the current round                 |
+| Field               | Type                   | Description                                         |
+|---------------------|------------------------|---------------------------------------------------|
+| `roomId`            | String                 | Unique ID representing the game room              |
+| `users`             | List\<User\>           | List of users in the session                       |
+| `readyStatus`       | Map\<UUID, Boolean\>   | Mapping of user IDs to their ready state           |
+| `submittedWords`    | Map\<UUID, String\>    | Words submitted by users (UUID → word)             |
+| `drawingOrder`      | List\<User\>           | Order in which users will draw                      |
+| `currentDrawerIndex`| int                    | Index of the current drawer in the drawing order   |
+| `phase`             | GamePhase              | Current game phase (e.g. LOBBY, DRAWING, etc.)     |
+| `currentWord`       | String                 | Word currently being drawn                          |
+| `currentDrawer`     | User                   | The user currently drawing                          |
+| `timerSeconds`      | int                    | Remaining time for the current round                |
 
 > 🧠 `GameSession` is a plain in-memory data structure (not persisted in the database) used to manage game state per room. It's initialized with a `roomId` and maintains the entire round lifecycle.
