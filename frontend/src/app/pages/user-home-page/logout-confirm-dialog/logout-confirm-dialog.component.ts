@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component} from '@angular/core';
 import {MatDialogModule} from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';

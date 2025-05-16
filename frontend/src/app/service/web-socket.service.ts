@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Client, IMessage, Stomp } from '@stomp/stompjs';
+import { Client, IMessage } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { Store } from '@ngrx/store';
 import { GameSession } from '../generated/model/gameSession';
@@ -12,12 +12,16 @@ import { Subject } from 'rxjs';
 export class WebSocketService {
   private stompClient: Client;
   public drawingReceived$ = new Subject<any>();
-  private chatSubject = new Subject<any>()
+  private chatSubject = new Subject<any>();
   public chatReceived$ = this.chatSubject.asObservable();
   private subscriptions: Array<ReturnType<Client['subscribe']>> = [];
 
   constructor(private store: Store) {
-    this.stompClient = new Client({
+    this.stompClient = this.createClient();
+  }
+
+  protected createClient(): Client {
+    return new Client({
       webSocketFactory: () => new SockJS('http://localhost:9090/ws'),
       reconnectDelay: 5000,
       debug: str => console.log('[STOMP]', str)
@@ -36,7 +40,7 @@ export class WebSocketService {
 
         this.stompClient.subscribe(`/topic/game/${roomId}/chat`, msg => {
           const chatMsg = JSON.parse(msg.body);
-          this.chatSubject.next(chatMsg); // ✅ Fix here too
+          this.chatSubject.next(chatMsg);
           console.log('Chat:', chatMsg);
         }),
 
@@ -52,6 +56,8 @@ export class WebSocketService {
         })
       );
     };
+
+    this.stompClient.activate();
   }
 
   public disconnect(): void {

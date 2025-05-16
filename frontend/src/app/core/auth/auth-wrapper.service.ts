@@ -3,6 +3,19 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../generated/api/auth.service';
 import { TokenResponse } from '../../generated/model/tokenResponse';
 
+interface DecodedToken {
+  exp: number;
+  iat: number;
+  sub: string;
+  email?: string;
+  preferred_username?: string;
+  resource_access?: {
+    [clientId: string]: {
+      roles: string[];
+    };
+  };
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthWrapperService {
   constructor(
@@ -33,7 +46,7 @@ export class AuthWrapperService {
     }
   }
 
-  getDecodedToken(): any | null {
+  getDecodedToken(): DecodedToken | null {
     const token = this.getAccessToken();
     if (!token) return null;
     try {

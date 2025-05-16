@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AdminService, User, UserService} from '../../../generated';
+import {AdminService, User} from '../../../generated';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import {MatCard} from '@angular/material/card';
@@ -63,7 +63,7 @@ export class AdminUserListComponent implements OnInit {
           Object.entries(userMap).map(([id, user]) => ({ id, user }))
         );
       },
-      error: (err) => this.showError('Failed to load users')
+      error: (err) => this.showError('Failed to load users: ' + err)
     });
   }
 

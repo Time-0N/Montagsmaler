@@ -1,9 +1,0 @@
-{
-  "directory": "src/app/api",
-  "delete": true,
-  "include": [
-    "models",
-    "services"
-  ],
-  "structure": "flat"
-}

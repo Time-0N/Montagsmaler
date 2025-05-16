@@ -5,8 +5,8 @@ import { CommonModule } from '@angular/common';
 import { fabric } from 'fabric';
 import { WebSocketService } from '../../../service/web-socket.service';
 import { Store } from '@ngrx/store';
-import { User } from '../../../generated/model/user';
-import { UserService } from '../../../generated/api/user.service';
+import { User } from '../../../generated';
+import { UserService } from '../../../generated';
 import { selectCurrentDrawer } from '../../../store/game-store/game-store.selectors';
 
 @Component({
