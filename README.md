@@ -6,7 +6,7 @@ This guide will help you set up the development environment for the **Montagsmal
 
 ## 🐘 Start the PostgreSQL and Keycloak Services
 
-Use the two `.sh` scripts located in `Montagsmaler/devRessources`:
+Use the two `.sh` scripts located in `Montagsmaler/dev/start`:
 
 ./start-postgres.sh  
 ./start-keycloak.sh
