@@ -3,16 +3,16 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpEvent } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
 
-import { HomePageComponentComponent } from './home-page-component.component';
+import { HomePageComponent } from './home-page.component';
 import { AuthService } from '../../../generated';
 import { AuthWrapperService } from '../../../core/auth/auth-wrapper.service';
 import { Router } from '@angular/router';
 import { TokenResponse } from '../../../generated';
 import { UserRegistrationRequest } from '../../../generated';
 
-describe('HomePageComponentComponent', () => {
-  let component: HomePageComponentComponent;
-  let fixture: ComponentFixture<HomePageComponentComponent>;
+describe('HomePageComponent', () => {
+  let component: HomePageComponent;
+  let fixture: ComponentFixture<HomePageComponent>;
   let authServiceSpy: jasmine.SpyObj<AuthService>;
   let authWrapperSpy: jasmine.SpyObj<AuthWrapperService>;
   let routerSpy: jasmine.SpyObj<Router>;
@@ -24,7 +24,7 @@ describe('HomePageComponentComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        HomePageComponentComponent,
+        HomePageComponent,
         ReactiveFormsModule
       ],
       providers: [
@@ -34,7 +34,7 @@ describe('HomePageComponentComponent', () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(HomePageComponentComponent);
+    fixture = TestBed.createComponent(HomePageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

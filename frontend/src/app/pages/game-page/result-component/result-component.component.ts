@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { selectCurrentSession } from '../../../store/game-store/game-store.selectors';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { User } from '../../../generated/model/user';
+import { User } from '../../../generated';
 
 @Component({
   selector: 'app-result-component',

@@ -2,16 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {AdminService, User} from '../../../generated';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import {MatCard} from '@angular/material/card';
-import {
-  MatCell, MatCellDef,
-  MatColumnDef,
-  MatHeaderCell,
-  MatHeaderCellDef,
-  MatHeaderRow,
-  MatHeaderRowDef, MatRow, MatRowDef,
-  MatTable
-} from '@angular/material/table';
+import {MatCard, MatCardTitle} from '@angular/material/card';
+import { MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderCellDef, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable} from '@angular/material/table';
 import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {DeleteConfirmDialogComponent} from '../delete-confirm-dialog/delete-confirm-dialog.component';
@@ -38,12 +30,13 @@ export interface UserWithId {
     MatHeaderRowDef,
     MatRowDef,
     MatRow,
-    MatCellDef
+    MatCellDef,
+    MatCardTitle
   ],
   styleUrls: ['./admin-user-list.component.scss']
 })
 export class AdminUserListComponent implements OnInit {
-  users: UserWithId[] = [];  // Changed to UserWithId array
+  users: UserWithId[] = [];
   displayedColumns: string[] = ['username', 'email', 'actions'];
 
   constructor(
@@ -101,14 +94,13 @@ export class AdminUserListComponent implements OnInit {
       if (updatedData) {
         this.adminService.adminUpdateUser(userWithId.id, updatedData).subscribe({
           next: () => {
-            // Update local data
             const index = this.users.findIndex(u => u.id === userWithId.id);
             if (index > -1) {
               this.users[index] = {
                 ...userWithId,
                 user: { ...userWithId.user, ...updatedData }
               };
-              this.users = [...this.users]; // Trigger change detection
+              this.users = [...this.users];
               this.snackBar.open('User updated successfully', 'Close', { duration: 3000 });
             }
           },

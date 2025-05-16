@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { createGame } from '../../../store/game-store/game-store.actions';
-
-// Angular Material
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 

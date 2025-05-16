@@ -1,5 +1,4 @@
-$primary: #5c6bc0;
-$accent: #81d4fa;
+@import '../../../../styles/variables';
 
 :host {
   display: block;
@@ -13,7 +12,7 @@ $accent: #81d4fa;
 }
 
 mat-card {
-  margin-bottom: 2rem;
+  margin-bottom: 0;
   padding: 1.5rem;
   border-radius: 12px;
   background-color: #2f3236;
@@ -21,6 +20,9 @@ mat-card {
   transition: transform 0.2s ease;
 }
 
+mat-card:not(:last-child) {
+  margin-bottom: 2rem;
+}
 mat-card:hover {
   transform: scale(1.01);
 }
@@ -93,7 +95,6 @@ button[color="warn"] {
 }
 
 .user-home-admin {
-  border-top: 2px dashed #555;
   padding-top: 1rem;
 }
 

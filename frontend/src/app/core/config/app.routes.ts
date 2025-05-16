@@ -1,17 +1,17 @@
 import { Routes } from '@angular/router';
-import { HomePageComponentComponent } from '../../pages/home-page/home-page-component/home-page-component.component';
-import { UserHomeComponentComponent } from '../../pages/user-home-page/user-home-component/user-home-component.component';
+import { HomePageComponent } from '../../pages/home-page/home-page/home-page.component';
+import { UserHomeComponent } from '../../pages/user-home-page/user-home/user-home.component';
 import {authGuard} from '../auth/auth.guard';
 import {resolveUserDataConfiguration} from '../../resolvers/user.resolver'
 
 export const routes: Routes = [
   {
     path: '',
-    component: HomePageComponentComponent
+    component: HomePageComponent
   },
   {
     path: 'user-home',
-    component: UserHomeComponentComponent,
+    component: UserHomeComponent,
     resolve: { userDataResolver: resolveUserDataConfiguration },
     canActivate: [authGuard]
   },

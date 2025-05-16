@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
-import { User } from '../../../generated/model/user';
-import { UserUpdateRequest } from '../../../generated/model/userUpdateRequest';
+import { User } from '../../../generated';
+import { UserUpdateRequest } from '../../../generated';
 import { updateUser, deleteUser } from '../../../store/user-store/user-store.actions';
 import { selectUser, selectUserLoading } from '../../../store/user-store/user-store.selectors';
 import { AuthWrapperService } from '../../../core/auth/auth-wrapper.service';
@@ -33,10 +33,10 @@ import {MatButton} from '@angular/material/button';
     MatDialogModule,
     MatButton
   ],
-  templateUrl: './user-home-component.component.html',
-  styleUrls: ['./user-home-component.component.scss']
+  templateUrl: './user-home.component.html',
+  styleUrls: ['./user-home.component.scss']
 })
-export class UserHomeComponentComponent implements OnInit {
+export class UserHomeComponent implements OnInit {
   user$!: Observable<User | null>;
   loading$!: Observable<boolean>;
   editMode = false;

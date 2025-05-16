@@ -3,8 +3,6 @@ import { Store } from '@ngrx/store';
 import { joinGame } from '../../../store/game-store/game-store.actions';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
-// Angular Material
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';

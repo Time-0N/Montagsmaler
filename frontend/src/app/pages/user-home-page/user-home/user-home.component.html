@@ -1,6 +1,5 @@
 <div *ngIf="user$ | async as user">
 
-  <!-- User Profile View -->
   <mat-card *ngIf="!editMode">
     <mat-card-title>User Profile</mat-card-title>
     <mat-card-content>
@@ -15,7 +14,6 @@
     </mat-card-actions>
   </mat-card>
 
-  <!-- User Edit Form -->
   <mat-card *ngIf="editMode">
     <mat-card-title>Edit Profile</mat-card-title>
     <mat-card-content>
@@ -26,7 +24,6 @@
     </mat-card-content>
   </mat-card>
 
-  <!-- Account Section -->
   <mat-card>
     <mat-card-title>Account</mat-card-title>
     <mat-card-actions>
@@ -35,7 +32,6 @@
     </mat-card-actions>
   </mat-card>
 
-  <!-- Game Actions -->
   <mat-card class="user-home-actions">
     <mat-card-title>Game Actions</mat-card-title>
     <mat-card-content>
@@ -44,7 +40,6 @@
     </mat-card-content>
   </mat-card>
 
-  <!-- Admin Panel -->
   <mat-card *ngIf="isAdmin" class="user-home-admin">
     <mat-card-title>Admin Panel</mat-card-title>
     <mat-card-content>

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../../generated/api/auth.service';
+import { AuthService } from '../../../generated';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { AuthWrapperService } from '../../../core/auth/auth-wrapper.service';
-import { AuthenticationRequest } from '../../../generated/model/authenticationRequest';
-import { UserRegistrationRequest } from '../../../generated/model/userRegistrationRequest';
-import { TokenResponse } from '../../../generated/model/tokenResponse';
+import { AuthenticationRequest } from '../../../generated';
+import { UserRegistrationRequest } from '../../../generated';
+import { TokenResponse } from '../../../generated';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -29,10 +29,10 @@ import { MatButtonModule } from '@angular/material/button';
     MatProgressSpinnerModule,
     MatButtonModule
   ],
-  templateUrl: './home-page-component.component.html',
-  styleUrls: ['./home-page-component.component.scss']
+  templateUrl: './home-page.component.html',
+  styleUrls: ['./home-page.component.scss']
 })
-export class HomePageComponentComponent implements OnInit {
+export class HomePageComponent implements OnInit {
   isLoginMode = true;
   loginForm!: FormGroup;
   registerForm!: FormGroup;
